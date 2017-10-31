@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Building a cloud-friendly application</title>
+  <meta name="author" content="Larry Garfield">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="platform-reveal/platform-theme/assets/css/styles.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'platform-theme/assets/css/print/pdf.css' : 'platform-theme/assets/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+
+  <script src="platform-reveal/countup.js"></script>
+
+  <!--[if lt IE 9]>
+  <script src="lib/js/html5shiv.js"></script>
+  <![endif]-->
+
+  <style type="text/css">
+
+    img.graphic {
+    }
+
+    ul.inline {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      text-align: center;
+    }
+
+    ul.inline li {
+      display: inline;
+    }
+
+    /*overwrites a default style that
+    vertically un-centered slides */
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0;
+    }
+
+    .reveal h2 + p.bigtext,
+    .reveal p + p {
+      margin-top: 1em;
+    }
+
+    .reveal #final p + p {
+      margin-top: 0;
+    }
+
+    .struck {
+      text-decoration: line-through;
+    }
+
+    p.bigdeal {
+      font-size: 200%;
+      color: Red;
+      font-style: italic;
+      text-shadow: 3px 3px 10px #990000;
+      display: block;
+    }
+
+    img.screenshot {
+      border-radius: 5px;
+      width: 900px;
+    }
+
+    blockquote em {
+      color: Green;
+      font-weight: bold !important;
+    }
+
+  </style>
+
+</head>
+<!-- Change body class to "dark" if you prefer a dark theme, or "light" if you'd rather have a light theme-->
+<body class="light">
+<div class="reveal">
+  <div class="logo">
+    <p>Platform.sh</p>
+  </div>
+  <!-- Any section element inside of this container is displayed as a slide -->
+  <div class="slides">
+
+    <section>
+      <h2>Building a cloud-friendly application</h2>
+      <p>
+        <small>Presented by <a href="http://www.garfieldtech.com/">Larry Garfield</a> (<a href="http://twitter.com/Crell">@Crell</a>)</small>
+      </p>
+    </section>
+    <section class="l-2up">
+      <h2><a href="http://twitter.com/Crell">@Crell</a></h2>
+      <div>
+        <img src="assets/larry-olaf-hug.jpg" alt="Larry implements Huggable" style="width: 350px; margin: 0" />
+      </div>
+      <div>
+        <ul style="text-wrap: none">
+          <li>Director of DX, <a href="http://www.platform.sh/">Platform.sh</a></li>
+          <li style="margin-top: 1em;">PHP-FIG Core Committee</li>
+          <li style="margin-top: 1em;"><code>implements Huggable</code></li>
+        </ul>
+      </div>
+    </section>
+    <section>
+
+    <section id="final">
+      <h2>Larry Garfield</h2>
+      <h2><a href="http://twitter.com/Crell">@Crell</a></h2>
+      <p>Director of Developer Experience <a href="http://www.platform.sh/">Platform.sh</a></p>
+      <p>Continuous Deployment Cloud Hosting</p>
+      <p>Stalk us at <a href="http://twitter.com/Platformsh">@PlatformSH</a></p>
+    </section>
+
+  </div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'plugin/zoom-js/zoom.js', async: true },
+      { src: 'plugin/notes/notes.js', async: true }
+    ]
+  });
+
+</script>
+
+</body>
+</html>
