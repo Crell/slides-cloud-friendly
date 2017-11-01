@@ -109,7 +109,39 @@
         </ul>
       </div>
     </section>
-    <section>
+
+    <div style="display:none">
+
+      * What is a cloud host?
+        * Infra is abstracted away from you
+        * Disposable applications
+
+      * Split code from content
+      * Configuration is code or content
+        * Ref Drupal?
+        * For SF, mostly code.
+      * Runtime connections
+        * Env vars
+        * place for glue
+        * Ref Symfony?
+        * Need to discuss env component here
+      * Installers
+        * No disk write
+        * Allow pre-defined creds
+        * Even UI services need code-provided creds
+      * Relative paths
+      * Boot fast
+        * PHP's got this covered
+        * Cache warm in build if you can
+        * Allow lazy-cache building
+      * No services build
+        * Don't assume number of webheads
+
+      * Constants for config suck
+        * Can't easily override, makes glue harder
+
+
+    </div>
 
     <section id="final">
       <h2>Larry Garfield</h2>
