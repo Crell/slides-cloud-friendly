@@ -48,7 +48,9 @@
     }
 
     .reveal h2 + p.bigtext,
-    .reveal p + p {
+    .reveal p + p,
+    .reveal h3 + p,
+    .reveal h3 + h3 {
       margin-top: 1em;
     }
 
@@ -108,6 +110,108 @@
           <li style="margin-top: 1em;"><code>implements Huggable</code></li>
         </ul>
       </div>
+    </section>
+    <section>
+      <section>
+        <p>Cloud picture</p>
+        <aside class="notes">
+          <ul>
+            <li>Not those clouds</li>
+            <li>Work at Platform.sh, behind SymfonyCloud</li>
+            <li>Work with lots of apps, good and bad.</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <img src="assets/cloud-eating-world.jpg" alt="Software is eating the world, and cloud is eating software." data-credit="https://twitter.com/bassamtabbara/status/921784412479545344" />
+        <small>(Source: <a href="https://twitter.com/bassamtabbara/status/921784412479545344">@bassamtabbara</a>)</small>
+        <aside class="notes">
+          <ul>
+            <li>Cloud-based hosting is the big thing</li>
+            <li>What is a cloud, and what's it mean?</li>
+          </ul>
+        </aside>
+      </section>
+    </section>
+    <section>
+      <section>
+        <h3>What is cloud computing?</h3>
+        <h3 class="fragment">What is the cloud?</h3>
+        <p class="fragment">These are separate questions...</p>
+      </section>
+      <section>
+        <h2>The Cloud&trade;: noun</h2>
+        <p class="bigtext">Someone else's hard drive</p>
+        <aside class="notes">
+          <ul>
+            <li>Marketing term</li>
+            <li>Business model: outsourcing</li>
+            <li>Not going to get into that</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h2>Cloud computing: noun</h2>
+        <p class="bigtext">Abstracting away physical infrastructure</p>
+        <p class="bigtext fragment">Disposable application design</p>
+        <aside class="notes">
+          <ul>
+            <li>Often but not always in The Cloud</li>
+            <li>Logical "systems", not physical boxen</li>
+            <li>Systems are "cattle", so are app instances</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h3>What makes an application cloud-friendly?</h3>
+      </section>
+    </section>
+    <section>
+      <section class="l-2up">
+        <!-- Reformat this slide, ugh. -->
+        <h2>Split code from content</h2>
+        <div class="fragment">
+          <h3>Code</h3>
+          <ul>
+            <li>Provided by developer</li>
+            <li>Carefully tested</li>
+            <li>Lives in version control</li>
+            <li>Read-only runtime</li>
+          </ul>
+        </div>
+        <div class="fragment">
+          <h3>Content</h3>
+          <ul>
+            <li>Provided by users</li>
+            <li>Frequently ad hoc</li>
+            <li>Lives in DB or filesystem</li>
+            <li>Writeable runtime</li>
+          </ul>
+        </div>
+        <div class="fragment">Don't mix the filesystems</div>
+        <aside class="notes">
+          <ul>
+            <li>RO FS for security, audit, don't edit prod</li>
+            <li>Split by directory</li>
+            <li>S3 an option, not requirement</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <p class="bigtext">Your application is disposable. Your data is not.</p>
+      </section>
+      <section>
+        <h3>Data flow</h3>
+        <!-- pic of code flowing up, data flowing down -->
+        <p class="fragment">You don't get an in-between option</p>
+      </section>
+      <section>
+        <h3>Take-away</h3>
+        <p>Cleanly separate "Dev provided" and "user provided" files into separate buckets</p>
+      </section>
+    </section>
+    <section>
+
     </section>
 
     <div style="display:none">
