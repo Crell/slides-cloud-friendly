@@ -165,6 +165,11 @@
       <section>
         <h3>What makes an application cloud-friendly?</h3>
       </section>
+      <section>
+        <h3>They're not rules</h3>
+        <img src="assets/captain-barbados.gif" width="70%" alt="They're more like guidelines..." data-credit="http://www.killerfilm.com/articles-2/read/captain-barbados-confirmed-for-pirates-4-14377" />
+        <h3>They're more like guidelines</h3>
+      </section>
     </section>
     <section>
       <section class="l-2up">
@@ -207,7 +212,7 @@
       </section>
       <section>
         <h3>Take-away</h3>
-        <p>Cleanly separate "Dev provided" and "user provided" files into separate buckets</p>
+        <p>Cleanly separate "Dev provided" and "user provided" files</p>
       </section>
     </section>
     <section>
@@ -221,13 +226,12 @@
           <ul>
             <li>Not usually an issue for bespoke apps</li>
             <li>CMSes, often</li>
-            <li>Content staging different thing</li>
           </ul>
         </aside>
       </section>
-      <section>
+      <section class="l--2up">
         <h2>Drupal Config Management</h2>
-        <img src="assets/drupal-8-logo.png" alt="Drupal 8" />
+        <img src="assets/drupal-8-logo.png" alt="Drupal 8" width="30%" />
         <ol>
           <li>Configure in UI / DB</li>
           <li>Export to YAML</li>
@@ -251,6 +255,20 @@
         </aside>
       </section>
     </section>
+    <section>
+      <section>
+        <h2>What happens at runtime<br />stays at runtime</h2>
+      </section>
+      <section>
+        <p>Picture of application slotting into environment</p>
+        <aside class="notes">
+          <ul>
+            <li>Application separate from env</li>
+            <li>Dev/Stage/Prod, Testing, multi-head, auto-scaling, etc.</li>
+          </ul>
+        </aside>
+      </section>
+    </section>
 
     <div style="display:none">
 
@@ -267,6 +285,8 @@
         * place for glue
         * Ref Symfony?
         * Need to discuss env component here
+        * Constants for config suck
+          * Can't easily override, makes glue harder
       * Installers
         * No disk write
         * Allow pre-defined creds
@@ -279,8 +299,6 @@
       * No services build
         * Don't assume number of webheads
 
-      * Constants for config suck
-        * Can't easily override, makes glue harder
 
 
     </div>
