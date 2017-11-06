@@ -18,7 +18,7 @@
     document.getElementsByTagName( 'head' )[0].appendChild( link );
   </script>
 
-  <script src="platform-reveal/countup.js"></script>
+  <script src="platform-reveal/classer.js"></script>
 
   <!--[if lt IE 9]>
   <script src="lib/js/html5shiv.js"></script>
@@ -265,12 +265,129 @@
           <ul>
             <li>Application separate from env</li>
             <li>Dev/Stage/Prod, Testing, multi-head, auto-scaling, etc.</li>
+            <li>Assume nothing about your environment!</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h3>Dependency inject your environment</h3>
+        <ul>
+          <li class="fragment">DB credentials <span class="fragment">(Solr, Redis, etc.)</span></li>
+          <li class="fragment">API keys</li>
+          <li class="fragment">All paths on disk</li>
+          <li class="fragment">Domain names</li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>Any service, internal or external</li>
+            <li>Ideally you never know credentials and keys</li>
+            <li>Paths relative to root OK, but root is injected</li>
+            <li>Paths and domain names in DB = bad</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h2>Environment variables</h2>
+        <pre class="font--24"><code class="php" data-trim>
+getenv('foo');
+
+$_ENV['foo'];
+
+$_ENV['foo']['bar'];
+        </code></pre>
+        <aside class="notes">
+          <ul>
+            <li>All env injected this way</li>
+            <li>Don't always control them exactly</li>
+            <li>Host may have own format, app has own format</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <p class="bigtext">Need glue code</p>
+        <aside class="notes">
+          <ul>
+            <li>Translate host env vars to app env vars</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h2>Platform.sh / SymfonyCloud</h2>
+        <pre class="font--18"><code class="php" data-trim>
+// platform_parameters.php
+// Configure the database.
+if (isset($_ENV['PLATFORM_RELATIONSHIPS'])) {
+    $dbRelationshipName = 'database';
+    $relationships = json_decode(base64_decode($_ENV['PLATFORM_RELATIONSHIPS']), true);
+
+    foreach ($relationships[$dbRelationshipName] as $endpoint) {
+        if (!empty($endpoint['query']['is_master'])) {
+            $container->setParameter('database_driver', 'pdo_'.$endpoint['scheme']);
+            $container->setParameter('database_host', $endpoint['host']);
+            $container->setParameter('database_port', $endpoint['port']);
+            $container->setParameter('database_name', $endpoint['path']);
+            $container->setParameter('database_user', $endpoint['username']);
+            $container->setParameter('database_password', $endpoint['password']);
+            $container->setParameter('database_path', '');
+            break;
+        }
+    }
+}
+// Set a default unique secret, based on a project-specific entropy value.
+if (isset($_ENV['PLATFORM_PROJECT_ENTROPY'])) {
+    $container->setParameter('kernel.secret', $_ENV['PLATFORM_PROJECT_ENTROPY']);
+}
+        </code></pre>
+      </section>
+      <section>
+        <ul>
+          <li><code>Request::setTrustedHosts()</code></li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>Trusted host will vary depending on dev/stage/prod</li>
+            <li>Never put domain in the DB.</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        Stuff about Symfony here
+      </section>
+      <section>
+        <h3><code id="constants">Constants?</code></h3>
+        <span class="fragment" data-classer="constants" data-classer-class="struck"></span>
+        <aside class="notes">
+          <ul>
+            <li>Globals</li>
+            <li>Make overriding harder (for local dev)</li>
+            <li>Make testing harder</li>
           </ul>
         </aside>
       </section>
     </section>
+    <section>
+      <section>
+        <h3>User-configured connections</h3>
+      </section>
+      <section>
+        <h3>Installers</h3>
+        <ul>
+          <li></li>
+        </ul>
+      </section>
+    </section>
 
     <div style="display:none">
+
+      * Runtime
+        * Application needs to run in different environments
+        * Prod, multi-head, staging, other staging, your laptop, colleague's laptop, testing, etc.
+        * Assume nothing about the environment!
+        * Dependency inject your environment
+        * Environment: Credentials, paths, domains
+        * environment variables
+        * Ask Damien about env var alternative?
+
 
       * What is a cloud host?
         * Infra is abstracted away from you
@@ -299,6 +416,8 @@
       * No services build
         * Don't assume number of webheads
 
+      * Don't use cloud-specific proprietary tools.
+        * Be able to move.
 
 
     </div>
