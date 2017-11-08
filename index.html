@@ -136,7 +136,7 @@
     <section>
       <section>
         <h3>What is cloud computing?</h3>
-        <h3 class="fragment">What is the cloud?</h3>
+        <h3 class="fragment">What is The Cloud?</h3>
         <p class="fragment">These are separate questions...</p>
       </section>
       <section>
@@ -371,9 +371,136 @@ if (isset($_ENV['PLATFORM_PROJECT_ENTROPY'])) {
       </section>
       <section>
         <h3>Installers</h3>
+        <ol>
+          <li class="fragment">Ask for DB credentials</li>
+          <li class="fragment">Ask user for basic site info</li>
+          <li class="fragment">Write credentials to config file</li>
+          <li class="fragment">Populate DB</li>
+          <li class="fragment">Write basic site info to config file/DB</li>
+          <li class="fragment">Profit!!!</li>
+        </ol>
+        <p id="no-cloud" class="fragment struck" data-classer="no-cloud" data-classer-class="bigdeal">Cloud</p>
+        <aside class="notes">
+          <ul>
+            <li>Basic installer outline</li>
+            <li>"Write to file" parts: fail!</li>
+            <li>All reasons before: RO disk, dynamic creds, etc.</li>
+            <li>Bad answer: Install elsewhere and upload</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h3>Better installers</h3>
         <ul>
-          <li></li>
+          <li class="fragment">Pre-include connection glue</li>
+          <li class="fragment">Installer skips pre-populated values</li>
+          <li class="fragment">Do not download from installer</li>
         </ul>
+        <aside class="notes">
+          <ul>
+            <li>Can download data (translations), not code</li>
+          </ul>
+        </aside>
+      </section>
+    </section>
+    <section>
+      <section>
+        <h3>Avoid lock-in</h3>
+      </section>
+      <section>
+        <blockquote>Always be able to<br />take your business elsewhere.</blockquote>
+        <aside class="notes">
+          <ul>
+            <li>Keep your providers honest</li>
+            <li>Even the ones you like</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <p class="bigtext">Use Free Software</p>
+        <p class="fragment bigtext">Use replaceable services</p>
+      </section>
+      <section>
+        <h3>Google has killed...</h3>
+        <ul style="column-count: 3">
+          <li>Reader</li>
+          <li>iGoogle</li>
+          <li>Google Talk</li>
+          <li>Google Health</li>
+          <li>Knol</li>
+          <li>Google Insights</li>
+          <li>Picnik</li>
+          <li>Buzz</li>
+          <li>Aardvark</li>
+          <li>Sidewiki</li>
+          <li>Notebook</li>
+          <li>Dictionary</li>
+          <li>Labs</li>
+          <li>Wave</li>
+          <li>SearchWiki</li>
+          <li>Dodgeball</li>
+          <li>Jaiku</li>
+          <li>Lively</li>
+          <li>Page Creator</li>
+          <li>Zeitgeist</li>
+          <li>Answers</li>
+          <li>Google X</li>
+          <li>Catalog</li>
+          <li>Web Accelerator</li>
+          <li>Video Player</li>
+          <li>Sets</li>
+          <li>SearchMash</li>
+          <li>Writely</li>
+        </ul>
+        <p><small>Source: <a href="http://www.wordstream.com/blog/ws/2013/06/27/discontinued-google-products-services">WordStream</a> (2015)</small></p>
+      </section>
+      <section class="l-2up">
+        <div>
+          <h3>Safe</h3>
+          <ul>
+            <li class="fragment">MySQL/MariaDB</li>
+            <li class="fragment">PostgreSQL</li>
+            <li class="fragment">MongDB</li>
+            <li class="fragment">RabbitMQ</li>
+            <li class="fragment">Solr/Elasticsearch</li>
+            <li class="fragment">InfluxDB</li>
+          </ul>
+        </div>
+        <div class="fragment">
+          <h3>Unsafe</h3>
+          <ul>
+            <li class="fragment">Amazon RDS</li>
+            <li class="fragment">Amazon DynamoDB</li>
+            <li class="fragment">Azure Cosmos DB</li>
+            <li class="fragment">Anything you can't replace in a day</li>
+          </ul>
+        </div>
+        <aside class="notes">
+          <ul>
+            <li>RDS: Proprietary relational DB</li>
+            <li>DynamoDB, Cosmos: NoSQL Mongo clone</li>
+            <li>Not anti-service, just anti-dependency</li>
+            <li>If dependent on 3rd party platform, dependent on 3rd party</li>
+            <li>Outsourcing problem, not cloud problem</li>
+          </ul>
+        </aside>
+      </section>
+    </section>
+      <section>
+        <section>
+          <h2>To summarize...</h2>
+          <blockquote class="fragment">Remember what they say when you assume</blockquote>
+          <aside class="notes">
+            <p>Don't assume</p>
+            <ul>
+              <li>environment</li>
+              <li>number of webheads</li>
+              <li>Connections</li>
+              <li>Domain</li>
+              <li>Writeability</li>
+            </ul>
+          </aside>
+        </section>
       </section>
     </section>
 
