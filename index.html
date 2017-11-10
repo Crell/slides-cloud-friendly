@@ -80,6 +80,15 @@
       font-weight: bold !important;
     }
 
+    .layout-columns {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .reveal .topspace {
+      margin-top: 1em;
+    }
+
   </style>
 
 </head>
@@ -112,8 +121,7 @@
       </div>
     </section>
     <section>
-      <section>
-        <p>Cloud picture</p>
+      <section data-background="assets/cloud-airplane-bulgaria.jpg">
         <aside class="notes">
           <ul>
             <li>Not those clouds</li>
@@ -172,28 +180,30 @@
       </section>
     </section>
     <section>
-      <section class="l-2up">
+      <section class="">
         <!-- Reformat this slide, ugh. -->
         <h2>Split code from content</h2>
-        <div class="fragment">
-          <h3>Code</h3>
-          <ul>
-            <li>Provided by developer</li>
-            <li>Carefully tested</li>
-            <li>Lives in version control</li>
-            <li>Read-only runtime</li>
-          </ul>
+        <div class="layout-columns topspace">
+          <div class="fragment">
+            <h3>Code</h3>
+            <ul>
+              <li>Provided by developer</li>
+              <li>Carefully tested</li>
+              <li>Lives in version control</li>
+              <li>Read-only runtime</li>
+            </ul>
+          </div>
+          <div class="fragment">
+            <h3>Content</h3>
+            <ul>
+              <li>Provided by users</li>
+              <li>Frequently ad hoc</li>
+              <li>Lives in DB or filesystem</li>
+              <li>Writeable runtime</li>
+            </ul>
+          </div>
         </div>
-        <div class="fragment">
-          <h3>Content</h3>
-          <ul>
-            <li>Provided by users</li>
-            <li>Frequently ad hoc</li>
-            <li>Lives in DB or filesystem</li>
-            <li>Writeable runtime</li>
-          </ul>
-        </div>
-        <div class="fragment">Don't mix the filesystems</div>
+        <div class="fragment topspace">Don't mix the filesystems</div>
         <aside class="notes">
           <ul>
             <li>RO FS for security, audit, don't edit prod</li>
@@ -247,7 +257,8 @@
         </aside>
       </section>
       <section>
-        <h2>Decide</h2>
+        <h2>Take-away</h2>
+        <p class="bigtext">Decide</p>
         <aside class="notes">
           <ul>
             <li>Doesn't matter which, but pick one</li>
