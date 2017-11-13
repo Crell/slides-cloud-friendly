@@ -85,6 +85,10 @@
       justify-content: space-around;
     }
 
+    .layout-centerline {
+      align-items: center;
+    }
+
     .reveal .topspace {
       margin-top: 1em;
     }
@@ -217,6 +221,7 @@
       </section>
       <section>
         <h3>Data flow</h3>
+        <img src="assets/workflow.svg" />
         <!-- pic of code flowing up, data flowing down -->
         <p class="fragment">You don't get an in-between option</p>
       </section>
@@ -239,16 +244,18 @@
           </ul>
         </aside>
       </section>
-      <section class="l--2up">
+      <section>
         <h2>Drupal Config Management</h2>
-        <img src="assets/drupal-8-logo.png" alt="Drupal 8" width="30%" />
-        <ol>
-          <li>Configure in UI / DB</li>
-          <li>Export to YAML</li>
-          <li>Commit to Git</li>
-          <li>Push / Pull</li>
-          <li>Import back to DB</li>
-        </ol>
+        <div class="layout-columns layout-centerline topspace">
+          <img src="assets/drupal-8-logo.png" alt="Drupal 8" style="width: 30%; height: 30%;" />
+          <ol>
+            <li>Configure in UI / DB</li>
+            <li>Export to YAML</li>
+            <li>Commit to Git</li>
+            <li>Push / Pull</li>
+            <li>Import back to DB</li>
+          </ol>
+        </div>
         <aside class="notes">
           <ul>
             <li>Works, but over-engineered for most</li>
@@ -375,6 +382,10 @@ if (isset($_ENV['PLATFORM_PROJECT_ENTROPY'])) {
           </ul>
         </aside>
       </section>
+      <section>
+        <h3>Take-away</h3>
+        <p>Dependency inject your environment</p>
+      </section>
     </section>
     <section>
       <section>
@@ -430,6 +441,12 @@ if (isset($_ENV['PLATFORM_PROJECT_ENTROPY'])) {
       <section>
         <p class="bigtext">Use Free Software</p>
         <p class="fragment bigtext">Use replaceable services</p>
+        <aside class="notes">
+          <ul>
+            <li>Go out of business, change pricing, change TOS</li>
+            <li>If app cannot run without AWS Lambda, you are 100% dependent on Amazon.</li>
+          </ul>
+        </aside>
       </section>
       <section>
         <h3>Google has killed...</h3>
@@ -464,27 +481,35 @@ if (isset($_ENV['PLATFORM_PROJECT_ENTROPY'])) {
           <li>Writely</li>
         </ul>
         <p><small>Source: <a href="http://www.wordstream.com/blog/ws/2013/06/27/discontinued-google-products-services">WordStream</a> (2015)</small></p>
+        <aside class="notes">
+          <ul>
+            <li>Providers have their interests in mind</li>
+            <li>You should have your interests in mind</li>
+          </ul>
+        </aside>
       </section>
-      <section class="l-2up">
-        <div>
-          <h3>Safe</h3>
-          <ul>
-            <li class="fragment">MySQL/MariaDB</li>
-            <li class="fragment">PostgreSQL</li>
-            <li class="fragment">MongDB</li>
-            <li class="fragment">RabbitMQ</li>
-            <li class="fragment">Solr/Elasticsearch</li>
-            <li class="fragment">InfluxDB</li>
-          </ul>
-        </div>
-        <div class="fragment">
-          <h3>Unsafe</h3>
-          <ul>
-            <li class="fragment">Amazon RDS</li>
-            <li class="fragment">Amazon DynamoDB</li>
-            <li class="fragment">Azure Cosmos DB</li>
-            <li class="fragment">Anything you can't replace in a day</li>
-          </ul>
+      <section>
+        <div class="layout-columns">
+          <div>
+            <h3>Safe</h3>
+            <ul>
+              <li class="fragment">MySQL/MariaDB</li>
+              <li class="fragment">PostgreSQL</li>
+              <li class="fragment">MongDB</li>
+              <li class="fragment">RabbitMQ</li>
+              <li class="fragment">Solr/Elasticsearch</li>
+              <li class="fragment">InfluxDB</li>
+            </ul>
+          </div>
+          <div class="fragment">
+            <h3>Unsafe</h3>
+            <ul>
+              <li class="fragment">Amazon RDS</li>
+              <li class="fragment">Amazon DynamoDB</li>
+              <li class="fragment">Azure Cosmos DB</li>
+              <li class="fragment">Anything you can't replace in a day</li>
+            </ul>
+          </div>
         </div>
         <aside class="notes">
           <ul>
