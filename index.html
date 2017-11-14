@@ -147,9 +147,11 @@
     </section>
     <section>
       <section>
-        <h3>What is cloud computing?</h3>
-        <h3 class="fragment">What is The Cloud?</h3>
-        <p class="fragment">These are separate questions...</p>
+        <div class="layout-columns layout-centerline">
+          <div style="font-size: larger;">What is cloud<br />computing?</div>
+          <div class="fragment" style="font-size: larger;">What is<br />The Cloud?</div>
+        </div>
+        <p class="fragment topspace">These are separate questions...</p>
       </section>
       <section>
         <h2>The Cloud&trade;: noun</h2>
@@ -278,7 +280,7 @@
         <h2>What happens at runtime<br />stays at runtime</h2>
       </section>
       <section>
-        <p>Picture of application slotting into environment</p>
+        <img src="assets/app-slotting.svg" alt="Application slots into cluster" />
         <aside class="notes">
           <ul>
             <li>Application separate from env</li>
@@ -323,6 +325,7 @@ $_ENV['foo']['bar'];
       </section>
       <section>
         <p class="bigtext">Need glue code</p>
+        <img src="assets/krazy-glue.jpg" data-credit="https://www.flickr.com/photos/chung123/5592465313/" />
         <aside class="notes">
           <ul>
             <li>Translate host env vars to app env vars</li>
@@ -330,7 +333,8 @@ $_ENV['foo']['bar'];
         </aside>
       </section>
       <section>
-        <h2>Platform.sh / SymfonyCloud</h2>
+        <h3>Platform.sh / SensioCloud</h3>
+        <h3>Symfony 3</h3>
         <pre class="font--18"><code class="php" data-trim>
 // platform_parameters.php
 // Configure the database.
@@ -358,6 +362,61 @@ if (isset($_ENV['PLATFORM_PROJECT_ENTROPY'])) {
         </code></pre>
       </section>
       <section>
+        <h3>Platform.sh / Symfony 4</h3>
+        <pre class="font--18"><code class="php" data-trim>
+// Set the DATABASE_URL for Doctrine, if necessary.
+if (!isset($_ENV['DATABASE_URL'])) {
+    if (isset($_ENV['PLATFORM_RELATIONSHIPS'])) {
+        $dbRelationshipName = 'database';
+        $relationships = json_decode(base64_decode($_ENV['PLATFORM_RELATIONSHIPS']),true);
+        foreach ($relationships[$dbRelationshipName] as $endpoint) {
+            if (!empty($endpoint['query']['is_master'])) {
+                $dbUrl = sprintf("%s://%s:%s@%s:%s/%s?charset=utf8mb4&serverVersion=10.2",
+                  $endpoint['scheme'], $endpoint['username'], $endpoint['password'],
+                  $endpoint['host'], $endpoint['port'],
+                  $endpoint['path']);
+                break;
+            }
+            $_ENV['DATABASE_URL'] = $dbUrl;
+        }
+    }
+    else {
+        // Hack the Doctrine URL to be syntactically valid in a build hook, even
+        // though it shouldn't be used.
+        $dbUrl = sprintf("%s://%s:%s@%s:%s/%s?charset=utf8mb4&serverVersion=10.2",
+          'mysql', '', '', 'localhost', 3306, '');
+        $_ENV['DATABASE_URL'] = $dbUrl;
+    }
+}
+
+// Set the application secret if it's not already set.
+if (!isset($_ENV['APP_SECRET']) && isset($_ENV['PLATFORM_PROJECT_ENTROPY'])) {
+    $_ENV['APP_SECRET'] = $_ENV['PLATFORM_PROJECT_ENTROPY'];
+}
+        </code></pre>
+      </section>
+      <section>
+        <h3>In the container</h3>
+        <pre class="font--18"><code class="yaml" data-trim>
+parameters:
+    app.connection.port: '%env(int:DATABASE_PORT)%'
+        </code></pre>
+        <pre class="font--18 fragment topspace"><code class="yaml" data-trim>
+parameters:
+    project_dir: '/foo/bar'
+    env(DB): 'sqlite://%%project_dir%%/var/data.db'
+    db_dsn: '%env(resolve:DB)%'
+        </code></pre>
+        <pre class="font--18 fragment topspace"><code class="yaml" data-trim>
+parameters:
+    env(SOME_VALUE): 'NWE3OWExYzg2NmVmZWY5Y2ExODAwZjk3MWQ2ODlmM2U='
+    app.some_value: '%env(base64:SOME_VALUE)%'
+
+    env(NUM_ITEMS): 'App\\Entity\\BlogPost::NUM_ITEMS'
+    app.num_items: '%env(constant:NUM_ITEMS)%'
+        </code></pre>
+      </section>
+      <section>
         <ul>
           <li><code>Request::setTrustedHosts()</code></li>
         </ul>
@@ -367,9 +426,6 @@ if (isset($_ENV['PLATFORM_PROJECT_ENTROPY'])) {
             <li>Never put domain in the DB.</li>
           </ul>
         </aside>
-      </section>
-      <section>
-        Stuff about Symfony here
       </section>
       <section>
         <h3><code id="constants">Constants?</code></h3>
