@@ -129,7 +129,7 @@
         <aside class="notes">
           <ul>
             <li>Not those clouds</li>
-            <li>Work at Platform.sh, behind SymfonyCloud</li>
+            <li>Work at Platform.sh</li>
             <li>Work with lots of apps, good and bad.</li>
           </ul>
         </aside>
@@ -315,11 +315,13 @@ $_ENV['foo'];
 
 $_ENV['foo']['bar'];
         </code></pre>
+        <p class="topspace fragment">Only ever use <code>getenv()</code></p>
         <aside class="notes">
           <ul>
             <li>All env injected this way</li>
             <li>Don't always control them exactly</li>
             <li>Host may have own format, app has own format</li>
+            <li>$_ENV breaks on php internal webserver</li>
           </ul>
         </aside>
       </section>
@@ -333,7 +335,7 @@ $_ENV['foo']['bar'];
         </aside>
       </section>
       <section>
-        <h3>Platform.sh / SensioCloud</h3>
+        <h3>Platform.sh</h3>
         <h3>Symfony 3</h3>
         <pre class="font--18"><code class="php" data-trim>
 // platform_parameters.php
@@ -363,63 +365,83 @@ if (isset($_ENV['PLATFORM_PROJECT_ENTROPY'])) {
       </section>
       <section>
         <h3>Platform.sh / Symfony 4</h3>
-        <pre class="font--18"><code class="php" data-trim>
-// Set the DATABASE_URL for Doctrine, if necessary.
-if (!isset($_ENV['DATABASE_URL'])) {
-    if (isset($_ENV['PLATFORM_RELATIONSHIPS'])) {
-        $dbRelationshipName = 'database';
-        $relationships = json_decode(base64_decode($_ENV['PLATFORM_RELATIONSHIPS']),true);
-        foreach ($relationships[$dbRelationshipName] as $endpoint) {
-            if (!empty($endpoint['query']['is_master'])) {
-                $dbUrl = sprintf("%s://%s:%s@%s:%s/%s?charset=utf8mb4&serverVersion=10.2",
-                  $endpoint['scheme'], $endpoint['username'], $endpoint['password'],
-                  $endpoint['host'], $endpoint['port'],
-                  $endpoint['path']);
-                break;
-            }
-            $_ENV['DATABASE_URL'] = $dbUrl;
-        }
-    }
-    else {
-        // Hack the Doctrine URL to be syntactically valid in a build hook, even
-        // though it shouldn't be used.
-        $dbUrl = sprintf("%s://%s:%s@%s:%s/%s?charset=utf8mb4&serverVersion=10.2",
-          'mysql', '', '', 'localhost', 3306, '');
-        $_ENV['DATABASE_URL'] = $dbUrl;
-    }
-}
+        <pre class="font--18"><code class="bash" data-trim>
+composer require platformsh/symfonyflex-bridge
+        </code></pre>
+        <pre class="fragment font--18"><code class="php" data-trim>
+mapPlatformShEnvironment();
 
-// Set the application secret if it's not already set.
-if (!isset($_ENV['APP_SECRET']) && isset($_ENV['PLATFORM_PROJECT_ENTROPY'])) {
-    $_ENV['APP_SECRET'] = $_ENV['PLATFORM_PROJECT_ENTROPY'];
+function mapPlatformShEnvironment() : void
+{
+    if (!getenv('PLATFORM_APPLICATION')) {
+        return;
+    }
+
+    $secret = getenv('APP_SECRET') ?: getenv('PLATFORM_PROJECT_ENTROPY') ?: null;
+    setEnvVar('APP_SECRET', $secret);
+
+    $appEnv = getenv('APP_ENV') ?: 'prod';
+    setEnvVar('APP_ENV', $appEnv);
+
+    if (!getenv('DATABASE_URL')) {
+        mapPlatformShDatabase();
+    }
 }
+// ...
         </code></pre>
       </section>
       <section>
-        <h3>In the container</h3>
-        <pre class="font--18"><code class="yaml" data-trim>
-parameters:
-    app.connection.port: '%env(int:DATABASE_PORT)%'
+        <h3>Platform.sh / Laravel</h3>
+        <pre class="font--18"><code class="bash" data-trim>
+composer require platformsh/laravel-bridge
         </code></pre>
-        <pre class="font--18 fragment topspace"><code class="yaml" data-trim>
-parameters:
-    project_dir: '/foo/bar'
-    env(DB): 'sqlite://%%project_dir%%/var/data.db'
-    db_dsn: '%env(resolve:DB)%'
-        </code></pre>
-        <pre class="font--18 fragment topspace"><code class="yaml" data-trim>
-parameters:
-    env(SOME_VALUE): 'NWE3OWExYzg2NmVmZWY5Y2ExODAwZjk3MWQ2ODlmM2U='
-    app.some_value: '%env(base64:SOME_VALUE)%'
+        <pre class="fragment font--18"><code class="php" data-trim>
+mapPlatformShEnvironment();
 
-    env(NUM_ITEMS): 'App\\Entity\\BlogPost::NUM_ITEMS'
-    app.num_items: '%env(constant:NUM_ITEMS)%'
+function mapPlatformShEnvironment() : void
+{
+    if (!getenv('PLATFORM_APPLICATION')) {
+        return;
+    }
+
+    mapAppUrl();
+
+    $secret = getenv('APP_KEY') ?: getenv('PLATFORM_PROJECT_ENTROPY') ?: null;
+    setEnvVar('APP_KEY', $secret);
+
+    $secure_cookie = getenv('SESSION_SECURE_COOKIE') ?: 1;
+    setEnvVar('SESSION_SECURE_COOKIE', $secure_cookie);
+
+    if (getenv('PLATFORM_RELATIONSHIPS')) {
+        $relationships = json_decode(base64_decode(getenv('PLATFORM_RELATIONSHIPS'), true), true);
+        mapPlatformShDatabase('database', $relationships);
+        mapPlatformShRedisCache('rediscache', $relationships);
+        mapPlatformShRedisSession('redissession', $relationships);
+    }
+}
+// ...
         </code></pre>
+        <aside class="notes">
+          <ul>
+            <li>The more you pre-define, the more we can automate</li>
+          </ul>
+        </aside>
       </section>
       <section>
-        <ul>
-          <li><code>Request::setTrustedHosts()</code></li>
-        </ul>
+        <h3>Glue of last resort</h3>
+        <p><code>composer.json</code></p>
+        <pre class="font--18"><code class="json" data-trim>
+{
+    "autoload": {
+        "files": ["extra-bridge.php"]
+    }
+}
+        </code></pre>
+        <p class="topspace fragment">Only works if your app reads env vars...</p>
+      </section>
+      <section>
+        <h3>Symfony\HttpFoundation</h3>
+        <p><code>Request::setTrustedHosts()</code></p>
         <aside class="notes">
           <ul>
             <li>Trusted host will vary depending on dev/stage/prod</li>
@@ -435,6 +457,7 @@ parameters:
             <li>Globals</li>
             <li>Make overriding harder (for local dev)</li>
             <li>Make testing harder</li>
+            <li>Lookin' at you, WordPress</li>
           </ul>
         </aside>
       </section>
