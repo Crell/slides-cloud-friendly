@@ -601,68 +601,22 @@ function mapPlatformShEnvironment() : void
         </aside>
       </section>
     </section>
+    <section>
       <section>
-        <section>
-          <h2>To summarize...</h2>
-          <blockquote class="fragment">Remember what they say when you assume</blockquote>
-          <aside class="notes">
-            <p>Don't assume</p>
-            <ul>
-              <li>environment</li>
-              <li>number of webheads</li>
-              <li>Connections</li>
-              <li>Domain</li>
-              <li>Writeability</li>
-            </ul>
-          </aside>
-        </section>
+        <h2>To summarize...</h2>
+        <blockquote class="fragment">Remember what they say when you assume</blockquote>
+        <aside class="notes">
+          <p>Don't assume</p>
+          <ul>
+            <li>environment</li>
+            <li>number of webheads</li>
+            <li>Connections</li>
+            <li>Domain</li>
+            <li>Writeability</li>
+          </ul>
+        </aside>
       </section>
     </section>
-
-    <div style="display:none">
-
-      * Runtime
-        * Application needs to run in different environments
-        * Prod, multi-head, staging, other staging, your laptop, colleague's laptop, testing, etc.
-        * Assume nothing about the environment!
-        * Dependency inject your environment
-        * Environment: Credentials, paths, domains
-        * environment variables
-        * Ask Damien about env var alternative?
-
-
-      * What is a cloud host?
-        * Infra is abstracted away from you
-        * Disposable applications
-
-      * Split code from content
-      * Configuration is code or content
-        * Ref Drupal?
-        * For SF, mostly code.
-      * Runtime connections
-        * Env vars
-        * place for glue
-        * Ref Symfony?
-        * Need to discuss env component here
-        * Constants for config suck
-          * Can't easily override, makes glue harder
-      * Installers
-        * No disk write
-        * Allow pre-defined creds
-        * Even UI services need code-provided creds
-      * Relative paths
-      * Boot fast
-        * PHP's got this covered
-        * Cache warm in build if you can
-        * Allow lazy-cache building
-      * No services build
-        * Don't assume number of webheads
-
-      * Don't use cloud-specific proprietary tools.
-        * Be able to move.
-
-
-    </div>
 
     <section id="final">
       <h2>Larry Garfield</h2>
