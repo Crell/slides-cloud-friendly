@@ -601,6 +601,134 @@ function mapPlatformShEnvironment() : void
         </aside>
       </section>
     </section>
+
+    <section>
+      <section>
+        <h3>Microservices: Threat or menace</h3>
+        <aside class="notes">
+          <ul>
+            <li>Clouds enable microservices, right...?</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h3>What is a microservice?</h3>
+        <div>
+          <blockquote>
+            There is no industry consensus yet regarding the properties of microservices, and an
+            official definition is missing as well.
+          </blockquote>
+          <p>&mdash;<a href="https://en.wikipedia.org/wiki/Microservices">Wikipedia</a></p>
+        </div>
+        <aside class="notes">
+          <ul>
+            <li>Thanks for nothing...</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h3>Properties of microservice design</h3>
+        <ul>
+          <li class="fragment">Single-purpose components</li>
+          <li class="fragment">Dumb pipes (HTTP, IPC, etc.)</li>
+          <li class="fragment">Separate teams</li>
+          <li class="fragment">Independent releases</li>
+        </ul>
+        <p>Sources: Wikipedia, <a href="https://martinfowler.com/articles/microservices.html">Martin Fowler</a></p>
+      </section>
+      <section>
+        <p><q>Every microservice treats every other microservice as a separate 3rd party
+          that may as well be a different company.</q></p>
+      </section>
+      <section>
+        <h3>Benefits</h3>
+        <ul>
+          <li class="fragment">Different tools/languages</li>
+          <li class="fragment">Small, focused, interdisiplinary teams</li>
+          <li class="fragment">Strong separation of concerns</li>
+          <li class="fragment">Scale/evolve/replace separately</li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>Most of these revolve around different teams</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <blockquote>Any organization that designs a system (defined broadly) will produce
+          a design whose structure is a copy of the organization's communication structure.</blockquote>
+        <p>&mdash;<a href="http://www.melconway.com/Home/Conways_Law.html">Conway's Law</a></p>
+      </section>
+      <section>
+        <h3>Drawbacks</h3>
+        <ul>
+          <li class="fragment">Network latency</li>
+          <li class="fragment">Network points of failure (plural)</li>
+          <li class="fragment">Transitioning code is 10x harder</li>
+          <li class="fragment">API versioning</li>
+          <li class="fragment">More staff needed</li>
+          <li class="fragment">PHP startup time</li>
+        </ul>
+      </section>
+      <section>
+        <blockquote>"If one of your microservices going down means the others don't work,
+          you don't have a microservice; you have a <em>distributed monolith</em>."</blockquote>
+        <p>&mdash;A few dozen people</p>
+      </section>
+      <section>
+        <p><q>So if microservices aren't for me, what is?</q></p>
+        <h3 class="fragment">Clustered applications</h3>
+      </section>
+      <section>
+        <h3>Clustered applications</h3>
+        <ul>
+          <li class="fragment">Single team</li>
+          <li class="fragment">Disrete components</li>
+          <li class="fragment">Deploys as once</li>
+          <li class="fragment">Usually one language (not required)</li>
+          <li class="fragment">May share datastores</li>
+        </ul>
+        <p class="fragment">You've probably already done this</p>
+      </section>
+      <section>
+        <h3>Clustered applications</h3>
+        <p class="bigtext fragment">Cron jobs</p>
+        <p class="bigtext fragment">"Admin" application</p>
+        <p class="bigtext fragment">Queue workers</p>
+        <p class="bigtext fragment">API app</p>
+        <aside class="notes">
+          <ul>
+            <li>Could be one code base or multiple</li>
+            <li>One language or multiple</li>
+            <li>Separate containers, scale independently</li>
+            <li>What do these all have in common?</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <p class="bigtext">All asynchronous</p>
+        <aside class="notes">
+          <ul>
+            <li>Each request only touches one service</li>
+            <li>Only do the work needed to respond</li>
+            <li>PHP is well-suited to this model</li>
+            <li>Still more complex than monolith!</li>
+          </ul>
+        </aside>
+      </section>
+    </section>
+
+    <div style="display: none">
+      Microservices
+
+      * More points of failure
+      * Split by team
+      * Split by async
+      * "If the request can't complete if the service goes down, it's not a microservice."
+      * If they deploy together are they microservices?  Maybe.  (Workers vs. separate apps.)
+
+    </div>
+
     <section>
       <section>
         <h2>To summarize...</h2>
@@ -612,7 +740,8 @@ function mapPlatformShEnvironment() : void
             <li>number of webheads</li>
             <li>Connections</li>
             <li>Domain</li>
-            <li>Writeability</li>
+            <li>writeability</li>
+            <li>That you are big enough to need microservices</li>
           </ul>
         </aside>
       </section>
