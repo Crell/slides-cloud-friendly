@@ -50,7 +50,8 @@
     .reveal h2 + p.bigtext,
     .reveal p + p,
     .reveal h3 + p,
-    .reveal h3 + h3 {
+    .reveal h3 + h3,
+    .reveal p + h3 {
       margin-top: 1em;
     }
 
@@ -340,9 +341,9 @@ $_ENV['foo']['bar'];
         <pre class="font--18"><code class="php" data-trim>
 // platform_parameters.php
 // Configure the database.
-if (isset($_ENV['PLATFORM_RELATIONSHIPS'])) {
+if (getenv('PLATFORM_RELATIONSHIPS')) {
     $dbRelationshipName = 'database';
-    $relationships = json_decode(base64_decode($_ENV['PLATFORM_RELATIONSHIPS']), true);
+    $relationships = json_decode(base64_decode(getenv('PLATFORM_RELATIONSHIPS')), true);
 
     foreach ($relationships[$dbRelationshipName] as $endpoint) {
         if (!empty($endpoint['query']['is_master'])) {
@@ -358,8 +359,8 @@ if (isset($_ENV['PLATFORM_RELATIONSHIPS'])) {
     }
 }
 // Set a default unique secret, based on a project-specific entropy value.
-if (isset($_ENV['PLATFORM_PROJECT_ENTROPY'])) {
-    $container->setParameter('kernel.secret', $_ENV['PLATFORM_PROJECT_ENTROPY']);
+if (getenv('PLATFORM_PROJECT_ENTROPY')) {
+    $container->setParameter('kernel.secret', getenv('PLATFORM_PROJECT_ENTROPY'));
 }
         </code></pre>
       </section>
@@ -634,7 +635,7 @@ function mapPlatformShEnvironment() : void
           <li class="fragment">Separate teams</li>
           <li class="fragment">Independent releases</li>
         </ul>
-        <p>Sources: Wikipedia, <a href="https://martinfowler.com/articles/microservices.html">Martin Fowler</a></p>
+        <p class="fragment">(Sources: Wikipedia, <a href="https://martinfowler.com/articles/microservices.html">Martin Fowler</a>)</p>
       </section>
       <section>
         <p><q>Every microservice treats every other microservice as a separate 3rd party
