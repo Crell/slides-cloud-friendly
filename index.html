@@ -441,6 +441,16 @@ function mapPlatformShEnvironment() : void
         <p class="topspace fragment">Only works if your app reads env vars...</p>
       </section>
       <section>
+        <p>Use DotEnv</p>
+        <p class="fragment">(PHP has several... because PHP)</p>
+        <aside class="notes">
+          <ul>
+            <li>Env defaults from config file</li>
+            <li>Use only in dev, read actual env vars in prod</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
         <h3>Symfony\HttpFoundation</h3>
         <p><code>Request::setTrustedHosts()</code></p>
         <aside class="notes">
