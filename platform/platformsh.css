@@ -1,0 +1,519 @@
+
+/** Fonts **/
+@import url(webfonts/overpass-webfont/overpass.css);
+@import url(webfonts/overpass-mono-webfont/overpass-mono.css);
+
+/* Enable or disable for debugging purposes
+to show where the edge of the slide region is. */
+.reveal .slides {
+  /*border: 1px dotted red;*/
+}
+
+:root {
+  --brand-font: "Overpass";
+  --brand-font-mono: "Overpass-mono";
+  --brand-color-neural-black: #1f1f19;
+  --brand-color-neural-white: #ffffff;
+  --brand-color-neural-gray: #eeede4;
+  --brand-color-neural-blue: #ededef;
+  --brand-color-primary-blue: #145cc6;
+  --brand-color-primary-pink: #ffaeae;
+  --brand-color-light-blue: #d0def4;
+  --brand-color-light-pink: #ffeeee;
+  --brand-color-accent-red: #fb3728;
+}
+
+html {
+  font-size: 25px;
+}
+
+body.skin-gray {
+  --background: var(--brand-color-neural-gray);
+  --color-text: var(--brand-color-neural-black);
+  --color-highlight: var(--brand-color-neural-blue);
+  --color-shadow: var(--brand-color-light-blue);
+  --color-inline-code-background: var(--brand-color-neural-white);
+  --color-inline-code: var(--brand-color-neural-black);
+  --color-link: var(--brand-color-primary-blue);
+  --color-quote-mark: var(--brand-color-primary-pink);
+  --color-emphasis: var(--brand-color-primary-blue);
+}
+
+body.skin-blue {
+  --background: var(--brand-color-neural-blue);
+  --color-text: var(--brand-color-neural-black);
+  --color-highlight: var(--brand-color-neural-gray);
+  --color-shadow: var(--brand-color-light-blue);
+  --color-inline-code-background: var(--brand-color-neural-white);
+  --color-inline-code: var(--brand-color-neural-black);
+  --color-link: var(--brand-color-primary-blue);
+  /* @todo Pink on blue is terrible but I'm not sure what else isn't worse. */
+  --color-quote-mark: var(--brand-color-primary-pink);
+  --color-emphasis: var(--brand-color-primary-blue);
+}
+
+body {
+  background-color: var(--background);
+  font-family: var(--brand-font), Helvetica, sans-serif;
+  color: var(--color-text);
+}
+
+.reveal {
+
+}
+
+/* The header/footer branding */
+
+.reveal > header,
+.reveal > footer {
+  white-space: nowrap;
+  font-size: 1rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.8rem;
+  /*margin-bottom: 0.8rem;*/
+}
+
+.reveal > header {
+  text-align: center;
+}
+
+.reveal > footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.reveal > footer > img {
+  margin-left: 3px;
+  margin-right: 20px;
+  height: 1rem;
+}
+
+/* Headers text */
+
+.reveal h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5em;
+}
+
+.reveal h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5em;
+}
+
+.reveal h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5em;
+}
+
+.reveal h4 {
+  font-size: 1rem;
+  margin-bottom: 0.5em;
+}
+
+/* Text styling */
+
+.reveal .slides p,
+.reveal .slides ul,
+.reveal .slides ol,
+.reveal .slides div,
+.reveal .slides pre,
+.reveal .slides blockquote {
+  margin-bottom: 0.8em;
+  line-height: 1.3em;
+}
+
+.reveal .slides li {
+  margin-bottom: 0.3em;
+}
+
+.reveal .slides pre code div {
+  margin: inherit;
+}
+
+.reveal ol,
+.reveal dl,
+.reveal ul {
+  display: inline-block;
+  text-align: left;
+}
+.reveal ol ol,
+.reveal dl dl,
+.reveal ul ul {
+  margin-left: 2em;
+}
+
+ul.inline {
+  display: flex;
+  list-style: none;
+  justify-content: space-around;
+  text-align: center;
+  align-items: center;
+}
+
+ul.inline li {
+  display: inline;
+}
+
+.reveal a, .reveal a:visited, .reveal a:focus {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+.reveal a:hover {
+  text-decoration: underline;
+}
+
+.reveal p.oversize {
+  font-size: 1.5rem;
+}
+
+p.bigdeal {
+  /* This is used in certain animations. */
+  font-size: 200%;
+  color: Red;
+  font-style: italic;
+  text-shadow: 3px 3px 10px #990000;
+  display: block;
+}
+
+.struck {
+  /* This is used in certain animations. */
+  text-decoration: line-through;
+}
+
+.reveal p.fullscreen-credit {
+  /* Used to show credit URL for a background image. */
+  /*position: absolute;*/
+  /*margin-top: 90%;*/
+  font-size: small;
+  width: available;
+  background-color: var(--color-highlight);
+  border-radius: 5px;
+}
+
+section[data-background] {
+
+}
+
+
+p.credit {
+  /* Used to show credit URL for an image in content. */
+  font-size: small;
+}
+
+.reveal sup {
+  vertical-align: super;
+}
+
+.reveal sub {
+  vertical-align: sub;
+}
+
+.reveal small {
+  display: inline-block;
+  font-size: 0.6em;
+  line-height: 1.2em;
+  vertical-align: top;
+}
+
+.reveal small * {
+  vertical-align: top;
+}
+
+.reveal pre {
+  display: block;
+  position: relative;
+  width: 100%;
+  margin: 0.25rem auto;
+  text-align: left;
+  font-size: 1rem;
+  font-family: var(--brand-font-mono), monospace;
+  line-height: 1.2em;
+  word-wrap: break-word;
+}
+
+
+aside {
+  /* Used mainly for captioned things */
+  margin-bottom: 1em;
+}
+
+/* Pick one of these sizes to change the font size of code */
+
+.reveal pre code.font--8 {
+  font-size: 8px;
+}
+
+.reveal pre code.font--12 {
+  font-size: 12px;
+}
+
+.reveal pre code.font--14 {
+  font-size: 14px;
+}
+
+.reveal pre code.font--16 {
+  font-size: 16px;
+}
+
+.reveal pre code.font--18 {
+  font-size: 18px;
+}
+
+.reveal pre code.font--20 {
+  font-size: 20px;
+}
+
+.reveal pre code.font--24 {
+  font-size: 24px;
+}
+
+.reveal pre code.font--30 {
+  font-size: 30px;
+}
+
+.reveal code {
+  font-family: var(--brand-font-mono), monospace;
+  border-radius: 2px;
+}
+
+.hljs-ln-line > .hljs-comment {
+  color: var(--color-shadow);
+}
+
+/* This is for inline code */
+.reveal :not(pre) > code {
+  color: var(--color-inline-code);
+  background-color: var(--color-inline-code-background);
+  padding: 0 8px;
+  border-radius: 2px;
+}
+
+.reveal pre > code {
+  padding: 0.5em;
+  overflow: auto;
+  font-size: 0.7rem;
+  max-width: 90%;
+  /* For some reason it doesn't center without re-specifying the margins. */
+  margin-left: auto;
+  margin-right: auto;
+  /* This is based on a default slide height in Reveal of 700px. */
+  max-height: 550px;
+}
+
+.reveal .slides pre > code div {
+  line-height: 1.4em;
+}
+
+.reveal pre > div {
+  margin-bottom: 0;
+}
+
+/* Layouts. These must all apply to div, not section elements. */
+
+div.layout-col {
+  /* By default this will be top-aligned. */
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: nowrap;
+}
+
+div.layout-col.equal-width > * {
+  flex: 1;
+}
+
+div.layout-col.vcentered {
+  align-items: center;
+}
+
+.reveal .layout-stacked {
+  /* When using this layout, you must specify an explicit height on the element or it will have no meaningful effect. */
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.reveal .layout-fixed-grid {
+  display: grid;
+  /* This is a default, intended to be overwritten by a style attribute. */
+  --column-count: 3;
+  grid-template-columns: repeat(var(--column-count), 1fr);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+
+.reveal .layout-fluid-grid {
+  display: grid;
+  /* This is a default, intended to be overwritten by a style attribute. */
+  --cell-width: 300px;
+  grid-template-columns: repeat(auto-fill, minmax(var(--cell-width), 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.reveal .layout-fixed-grid > li,
+.reveal .layout-fluid-grid > li {
+  text-align: center;
+  margin: 0;
+  padding: 10px;
+}
+
+.reveal .layout-fluid-grid img,
+.reveal .layout-fixed-grid img
+{
+  max-width: 100%;
+}
+
+div.layout-2up-1down {
+  display: grid;
+  grid-template-rows: 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "left right"
+    "bottom bottom";
+  justify-items: center;
+}
+
+/* Tables */
+
+.reveal table {
+  margin: auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.reveal table th {
+  font-weight: bold;
+  background-color: var(--color-highlight);
+}
+
+.reveal table th,
+.reveal table td {
+  text-align: left;
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  border: 1px solid;
+}
+
+.reveal table th[align="center"],
+.reveal table td[align="center"] {
+  text-align: center;
+}
+
+.reveal table th[align="right"],
+.reveal table td[align="right"] {
+  text-align: right;
+}
+
+.reveal table > caption {
+  margin-bottom: 0.2em;
+}
+
+/* Images */
+
+img.screenshot {
+  border-radius: 5px;
+  max-width: 90%;
+  /* These values based on the default Reveal.js slide size of 960x700. */
+  max-height: 650px;
+}
+
+img.meme {
+  width: 90%;
+  /* These values based on the default Reveal.js slide size of 960x700. */
+  max-width: 960px;
+  max-height: 650px;
+}
+
+img.diagram {
+  width: 80%;
+  /* These values based on the default Reveal.js slide size of 960x700. */
+  max-width: 960px;
+  max-height: 650px;
+}
+
+/* Quotes of various kinds */
+
+.reveal aside.quote > cite {
+  font-style: italic;
+}
+
+.reveal aside.quote > cite::before {
+  /* This is an mdash, not a hypen. */
+  content: '—';
+}
+
+blockquote {
+  margin-left: 10%;
+  margin-right: 10%;
+  position: relative;
+  font-size: 1.5rem;
+}
+.quote {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.quote blockquote {
+  display: inline-block;
+}
+
+/* @todo I'm not really happy with how this works out visually. */
+blockquote::before {
+  content: '\201C';
+  color: var(--color-quote-mark);
+  font-size: 8rem;
+  position: absolute;
+  left: -0.4em;
+  top: 2.5rem;
+  z-index: -5;
+}
+blockquote::after {
+  content: '\201D';
+  color: var(--color-quote-mark);
+  font-size: 8rem;
+  position: absolute;
+  right: -0.4em;
+  top: 2.5rem;
+  z-index: -5;
+}
+
+blockquote em {
+  color: var(--color-emphasis);
+  font-style: italic;
+}
+
+blockquote strong {
+  color: var(--color-emphasis);
+  font-weight: bold !important;
+}
+
+.reveal q {
+  font-style: italic;
+}
+.reveal q:before {
+  content: '\201C';
+}
+
+.reveal q:after {
+  content: '\201D';
+}
+
+/* Backgrounds */
+
+.reveal .slide-background.background-contain > .slide-background-content {
+  /* Use to constrain the background image within the
+  space of the slide. Without this class the background
+  image will spill outside of the slide/screen in one
+  direction.
+   */
+  background-size: contain;
+}
