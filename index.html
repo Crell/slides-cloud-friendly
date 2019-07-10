@@ -71,15 +71,19 @@
     </section>
     <section>
       <section>
-        <div class="layout-columns layout-centerline">
-          <div style="font-size: larger;">What is cloud<br />computing?</div>
-          <div class="fragment" style="font-size: larger;">What is<br />The Cloud?</div>
+        <div class="layout-col">
+          <p class="oversize">What is cloud<br />computing?</p>
+          <p class="fragment oversize">What is<br />The Cloud?</p>
         </div>
-        <p class="fragment topspace">These are separate questions...</p>
+
+        <div class="layout-columns layout-centerline">
+
+        </div>
+        <p class="fragment">These are separate questions...</p>
       </section>
       <section>
         <h2>The Cloud&trade;: noun</h2>
-        <p class="bigtext">Someone else's hard drive</p>
+        <p class="oversize">Someone else's hard drive</p>
         <aside class="notes">
           <ul>
             <li>Marketing term</li>
@@ -90,8 +94,8 @@
       </section>
       <section>
         <h2>Cloud computing: noun</h2>
-        <p class="bigtext">Abstracting away physical infrastructure</p>
-        <p class="bigtext fragment">Disposable application design</p>
+        <p class="oversize">Abstracting away physical infrastructure</p>
+        <p class="oversize fragment">Disposable application design</p>
         <aside class="notes">
           <ul>
             <li>Often but not always in The Cloud</li>
@@ -110,10 +114,9 @@
       </section>
     </section>
     <section>
-      <section class="">
-        <!-- Reformat this slide, ugh. -->
+      <section>
         <h2>Split code from content</h2>
-        <div class="layout-columns topspace">
+        <div class="layout-col">
           <div class="fragment">
             <h3>Code</h3>
             <ul>
@@ -143,12 +146,11 @@
         </aside>
       </section>
       <section>
-        <p class="bigtext">Your application is disposable.<br />Your data is not.</p>
+        <p class="oversize">Your application is disposable.<br />Your data is not.</p>
       </section>
       <section>
         <h3>Data flow</h3>
-        <img src="assets/workflow.svg" />
-        <!-- pic of code flowing up, data flowing down -->
+        <p><img src="assets/workflow.svg" class="" width="62%" alt="Code flows up to production, data flows down." /></p>
         <p class="fragment">You don't get an in-between option</p>
       </section>
       <section>
@@ -172,7 +174,7 @@
       </section>
       <section>
         <h2>Drupal Config Management</h2>
-        <div class="layout-columns layout-centerline topspace">
+        <div class="layout-col vcentered">
           <img src="assets/drupal-8-logo.png" alt="Drupal 8" style="width: 30%; height: 30%;" />
           <ol>
             <li>Configure in UI / DB</li>
@@ -191,7 +193,7 @@
       </section>
       <section>
         <h2>Take-away</h2>
-        <p class="bigtext">Decide</p>
+        <p class="oversize">Decide</p>
         <aside class="notes">
           <ul>
             <li>Doesn't matter which, but pick one</li>
@@ -250,8 +252,8 @@ $_ENV['foo']['bar'];
         </aside>
       </section>
       <section>
-        <p class="bigtext">Need glue code</p>
-        <img src="assets/krazy-glue.jpg" data-credit="https://www.flickr.com/photos/chung123/5592465313/" />
+        <p class="oversize">Need glue code</p>
+        <img src="assets/krazy-glue.jpg" width="90%" data-credit="https://www.flickr.com/photos/chung123/5592465313/" />
         <aside class="notes">
           <ul>
             <li>Translate host env vars to app env vars</li>
@@ -261,14 +263,12 @@ $_ENV['foo']['bar'];
       <section>
         <h3>Platform.sh</h3>
         <h3>Symfony 3</h3>
-        <pre class="font--18"><code class="php" data-trim>
+        <pre><code class="php font--14" data-trim>
 // platform_parameters.php
-// Configure the database.
 if (getenv('PLATFORM_RELATIONSHIPS')) {
-    $dbRelationshipName = 'database';
     $relationships = json_decode(base64_decode(getenv('PLATFORM_RELATIONSHIPS')), true);
 
-    foreach ($relationships[$dbRelationshipName] as $endpoint) {
+    foreach ($relationships['database'] as $endpoint) {
         if (!empty($endpoint['query']['is_master'])) {
             $container->setParameter('database_driver', 'pdo_'.$endpoint['scheme']);
             $container->setParameter('database_host', $endpoint['host']);
@@ -276,15 +276,11 @@ if (getenv('PLATFORM_RELATIONSHIPS')) {
             $container->setParameter('database_name', $endpoint['path']);
             $container->setParameter('database_user', $endpoint['username']);
             $container->setParameter('database_password', $endpoint['password']);
-            $container->setParameter('database_path', '');
             break;
         }
     }
 }
-// Set a default unique secret, based on a project-specific entropy value.
-if (getenv('PLATFORM_PROJECT_ENTROPY')) {
-    $container->setParameter('kernel.secret', getenv('PLATFORM_PROJECT_ENTROPY'));
-}
+$container->setParameter('kernel.secret', getenv('PLATFORM_PROJECT_ENTROPY'));
         </code></pre>
       </section>
       <section>
@@ -292,7 +288,7 @@ if (getenv('PLATFORM_PROJECT_ENTROPY')) {
         <pre class="font--18"><code class="bash" data-trim>
 composer require platformsh/symfonyflex-bridge
         </code></pre>
-        <pre class="fragment font--18"><code class="php" data-trim>
+        <pre class="fragment font--16"><code class="php" data-trim>
 mapPlatformShEnvironment();
 
 function mapPlatformShEnvironment() : void
@@ -364,7 +360,7 @@ function mapPlatformShEnvironment() : void
         <p class="topspace fragment">Only works if your app reads env vars...</p>
       </section>
       <section>
-        <p>Use DotEnv</p>
+        <p class="oversize">Use DotEnv</p>
         <p class="fragment">(PHP has several... because PHP)</p>
         <aside class="notes">
           <ul>
@@ -452,8 +448,8 @@ function mapPlatformShEnvironment() : void
         </aside>
       </section>
       <section>
-        <p class="bigtext">Use Free Software</p>
-        <p class="fragment bigtext">Use replaceable services</p>
+        <p class="oversize">Use Free Software</p>
+        <p class="fragment oversize">Use replaceable services</p>
         <aside class="notes">
           <ul>
             <li>Go out of business, change pricing, change TOS</li>
@@ -504,7 +500,7 @@ function mapPlatformShEnvironment() : void
         </aside>
       </section>
       <section>
-        <div class="layout-columns">
+        <div class="layout-col">
           <div>
             <h3>Safe</h3>
             <ul>
@@ -546,13 +542,15 @@ function mapPlatformShEnvironment() : void
         </aside>
       </section>
       <section>
-        <h3>What is a microservice?</h3>
-        <div>
-          <blockquote>
-            There is no industry consensus yet regarding the properties of microservices, and an
-            official definition is missing as well.
-          </blockquote>
-          <p>&mdash;<a href="https://en.wikipedia.org/wiki/Microservices">Wikipedia</a></p>
+        <div class="layout-stacked">
+          <h3>What is a microservice?</h3>
+          <p>
+            <blockquote>
+              There is no industry consensus yet regarding the properties of microservices, and an
+              official definition is missing as well.
+            </blockquote>
+            <p>&mdash;<a href="https://en.wikipedia.org/wiki/Microservices">Wikipedia</a></p>
+          </p>
         </div>
         <aside class="notes">
           <ul>
@@ -571,7 +569,7 @@ function mapPlatformShEnvironment() : void
         <p class="fragment">(Sources: Wikipedia, <a href="https://martinfowler.com/articles/microservices.html">Martin Fowler</a>)</p>
       </section>
       <section>
-        <p><q>Every microservice treats every other microservice as a separate 3rd party
+        <p><q>Every microservice treats every other microservice as a separate 3rd party<br />
           that may as well be a different company.</q></p>
       </section>
       <section>
@@ -626,10 +624,11 @@ function mapPlatformShEnvironment() : void
       </section>
       <section>
         <h3>Clustered applications</h3>
-        <p class="bigtext fragment">Cron jobs</p>
-        <p class="bigtext fragment">"Admin" application</p>
-        <p class="bigtext fragment">Queue workers</p>
-        <p class="bigtext fragment">API app</p>
+        <p>&nbsp;</p>
+        <p class="oversize fragment">Cron jobs</p>
+        <p class="oversize fragment">"Admin" application</p>
+        <p class="oversize fragment">Queue workers</p>
+        <p class="oversize fragment">API app</p>
         <aside class="notes">
           <ul>
             <li>Could be one code base or multiple</li>
@@ -640,7 +639,7 @@ function mapPlatformShEnvironment() : void
         </aside>
       </section>
       <section>
-        <p class="bigtext">All asynchronous</p>
+        <p class="oversize">All asynchronous</p>
         <aside class="notes">
           <ul>
             <li>Each request only touches one service</li>
