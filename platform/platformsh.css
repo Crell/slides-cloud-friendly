@@ -419,6 +419,11 @@ div.layout-2up-1down {
 
 /* Images */
 
+img {
+  /* Make sure no images go larger than the screen, if nothing else. */
+  max-width: 100%;
+}
+
 img.screenshot {
   border-radius: 5px;
   max-width: 90%;
