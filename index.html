@@ -235,6 +235,20 @@
       <section>
         <h2>Environment variables</h2>
         <pre class="font--24"><code class="php" data-trim>
+          // PHP
+          getenv('foo');
+        </code></pre>
+        <pre class="font--24"><code class="js" data-trim>
+          // Node.js
+          process.env["foo"];
+        </code></pre>
+        <pre class="font--24"><code class="go" data-trim>
+          // Go
+          os.Getenv("foo");
+        </code></pre>
+        <p>Etc.</p>
+        <!--
+        <pre class="font--24"><code class="php" data-trim>
 getenv('foo');
 
 $_ENV['foo'];
@@ -242,12 +256,13 @@ $_ENV['foo'];
 $_ENV['foo']['bar'];
         </code></pre>
         <p class="topspace fragment">Only ever use <code>getenv()</code></p>
+-->
         <aside class="notes">
           <ul>
             <li>All env injected this way</li>
             <li>Don't always control them exactly</li>
             <li>Host may have own format, app has own format</li>
-            <li>$_ENV breaks on php internal webserver</li>
+<!--            <li>$_ENV breaks on php internal webserver</li>-->
           </ul>
         </aside>
       </section>
@@ -283,6 +298,53 @@ $container->setParameter('kernel.secret', getenv('PLATFORM_PROJECT_ENTROPY'));
         </code></pre>
       </section>
       <section>
+        <h3>Platform.sh / Express.js</h3>
+        <pre><code class="javascript" data-trim>
+const platformsh = require('platformsh-config');
+let config = platformsh.config();
+
+const credentials = config.credentials('database');
+
+const connection = await mysql.createConnection({
+    host: credentials.host,
+    port: credentials.port,
+    user: credentials.username,
+    password: credentials.password,
+    database: credentials.path,
+});
+
+var app = express();
+// ...
+
+app.listen(config.port);
+        </code></pre>
+      </section>
+      <section>
+        <h3>Platform.sh / Go</h3>
+        <pre><code class="go font--14" data-trim>
+package conf
+import (
+  psh "github.com/platformsh/config-reader-go/v2"
+)
+var PshConfig = createPshConfigObj()
+
+func createPshConfigObj() *psh.RuntimeConfig {
+  config, _ := psh.NewRuntimeConfig()
+  return config
+}
+        </code></pre>
+        <pre><code class="go font--14" data-trim>
+package main
+
+func main() {
+  engine := gin.Default()
+  // ...
+  err := ginInstance.Run(":" + conf.PshConfig.Port())
+}
+        </code></pre>
+      </section>
+<!--
+      <section>
         <h3>Platform.sh / Symfony 4</h3>
         <pre class="font--18"><code class="bash" data-trim>
 composer require platformsh/symfonyflex-bridge
@@ -313,6 +375,8 @@ function mapPlatformShEnvironment() : void
           </ul>
         </aside>
       </section>
+-->
+<!--
       <section>
         <h3>Platform.sh / Laravel</h3>
         <pre class="font--18"><code class="bash" data-trim>
@@ -343,6 +407,8 @@ function mapPlatformShEnvironment() : void
           </ul>
         </aside>
       </section>
+-->
+<!--
       <section>
         <h3>Glue of last resort</h3>
         <p><code>composer.json</code></p>
@@ -355,9 +421,10 @@ function mapPlatformShEnvironment() : void
         </code></pre>
         <p class="topspace fragment">Only works if your app reads env vars...</p>
       </section>
+-->
       <section>
-        <p class="oversize">Use DotEnv</p>
-        <p class="fragment">(PHP has several... because PHP)</p>
+        <p class="oversize">Use DotEnv (<code>.env</code> files)</p>
+        <p class="fragment">(Many to pick from in every language)</p>
         <aside class="notes">
           <ul>
             <li>Env defaults from config file</li>
@@ -365,9 +432,12 @@ function mapPlatformShEnvironment() : void
           </ul>
         </aside>
       </section>
+
       <section>
-        <h3>Symfony\HttpFoundation</h3>
-        <p><code>Request::setTrustedHosts()</code></p>
+        <h3>Trusted domains</h3>
+        <p>(App-specific configuration)</p>
+<!--        <h3>Symfony\HttpFoundation</h3>-->
+<!--        <p><code>Request::setTrustedHosts()</code></p>-->
         <aside class="notes">
           <ul>
             <li>Trusted host will vary depending on dev/stage/prod</li>
