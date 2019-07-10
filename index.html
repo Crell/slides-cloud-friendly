@@ -261,8 +261,7 @@ $_ENV['foo']['bar'];
         </aside>
       </section>
       <section>
-        <h3>Platform.sh</h3>
-        <h3>Symfony 3</h3>
+        <h3>Platform.sh / Symfony 3</h3>
         <pre><code class="php font--14" data-trim>
 // platform_parameters.php
 if (getenv('PLATFORM_RELATIONSHIPS')) {
@@ -289,26 +288,30 @@ $container->setParameter('kernel.secret', getenv('PLATFORM_PROJECT_ENTROPY'));
 composer require platformsh/symfonyflex-bridge
         </code></pre>
         <pre class="fragment font--16"><code class="php" data-trim>
-mapPlatformShEnvironment();
-
 function mapPlatformShEnvironment() : void
 {
-    if (!getenv('PLATFORM_APPLICATION')) {
-        return;
-    }
+    $config = new Config();
 
-    $secret = getenv('APP_SECRET') ?: getenv('PLATFORM_PROJECT_ENTROPY') ?: null;
+    $secret = getenv('APP_SECRET') ?: $config->projectEntropy;
     setEnvVar('APP_SECRET', $secret);
 
     $appEnv = getenv('APP_ENV') ?: 'prod';
     setEnvVar('APP_ENV', $appEnv);
 
-    if (!getenv('DATABASE_URL')) {
-        mapPlatformShDatabase();
+    mapPlatformShDatabase('database', $config);
+
+    if (!getenv('MAILER_DSN')) {
+        mapPlatformShMailer($config);
     }
 }
 // ...
         </code></pre>
+        <aside class="notes">
+          <ul>
+            <li>Uses abstraction library to make working with Env vars easier.</li>
+            <li>Available for many languages.</li>
+          </ul>
+        </aside>
       </section>
       <section>
         <h3>Platform.sh / Laravel</h3>
@@ -316,28 +319,21 @@ function mapPlatformShEnvironment() : void
 composer require platformsh/laravel-bridge
         </code></pre>
         <pre class="fragment font--18"><code class="php" data-trim>
-mapPlatformShEnvironment();
-
 function mapPlatformShEnvironment() : void
 {
-    if (!getenv('PLATFORM_APPLICATION')) {
-        return;
-    }
+    $config = new Config();
 
-    mapAppUrl();
-
-    $secret = getenv('APP_KEY') ?: getenv('PLATFORM_PROJECT_ENTROPY') ?: null;
+    $secret = "base64:" . base64_encode(substr(
+          base64_decode($config->projectEntropy), 0, 32));
     setEnvVar('APP_KEY', $secret);
 
     $secure_cookie = getenv('SESSION_SECURE_COOKIE') ?: 1;
     setEnvVar('SESSION_SECURE_COOKIE', $secure_cookie);
 
-    if (getenv('PLATFORM_RELATIONSHIPS')) {
-        $relationships = json_decode(base64_decode(getenv('PLATFORM_RELATIONSHIPS'), true), true);
-        mapPlatformShDatabase('database', $relationships);
-        mapPlatformShRedisCache('rediscache', $relationships);
-        mapPlatformShRedisSession('redissession', $relationships);
-    }
+    mapAppUrl($config);
+    mapPlatformShDatabase('database', $config);
+    mapPlatformShRedisCache('rediscache', $config);
+    mapPlatformShRedisSession('redissession', $config);
 }
 // ...
         </code></pre>
