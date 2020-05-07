@@ -246,6 +246,10 @@
           // Go
           os.Getenv("foo");
         </code></pre>
+        <pre class="font--24"><code class="Java" data-trim>
+          // Java
+          System.getEnv("foo");
+        </code></pre>
         <p>Etc.</p>
         <!--
         <pre class="font--24"><code class="php" data-trim>
@@ -297,6 +301,7 @@ if (getenv('PLATFORM_RELATIONSHIPS')) {
 $container->setParameter('kernel.secret', getenv('PLATFORM_PROJECT_ENTROPY'));
         </code></pre>
       </section>
+<!--
       <section>
         <h3>Platform.sh / Express.js</h3>
         <pre><code class="javascript" data-trim>
@@ -319,6 +324,7 @@ var app = express();
 app.listen(config.port);
         </code></pre>
       </section>
+-->
       <section>
         <h3>Platform.sh / Go</h3>
         <pre><code class="go font--14" data-trim>
@@ -343,39 +349,85 @@ func main() {
 }
         </code></pre>
       </section>
-<!--
       <section>
-        <h3>Platform.sh / Symfony 4</h3>
-        <pre class="font--18"><code class="bash" data-trim>
-composer require platformsh/symfonyflex-bridge
-        </code></pre>
-        <pre class="fragment font--16"><code class="php" data-trim>
-function mapPlatformShEnvironment() : void
-{
-    $config = new Config();
+        <h3>Platform.sh / Java Spring</h3>
+        <pre><code class="java font--14" data-trim>
+package sh.platform.template;
 
-    $secret = getenv('APP_SECRET') ?: $config->projectEntropy;
-    setEnvVar('APP_SECRET', $secret);
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import sh.platform.config.Config;
+import sh.platform.config.MySQL;
 
-    $appEnv = getenv('APP_ENV') ?: 'prod';
-    setEnvVar('APP_ENV', $appEnv);
+import javax.sql.DataSource;
 
-    mapPlatformShDatabase('database', $config);
-
-    if (!getenv('MAILER_DSN')) {
-        mapPlatformShMailer($config);
+@Configuration
+public class DataSourceConfig {
+    @Bean(name = "dataSource")
+    public DataSource getDataSource() {
+        Config config = new Config();
+        MySQL database = config.getCredential("database", MySQL::new);
+        return database.get();
     }
 }
-// ...
         </code></pre>
-        <aside class="notes">
-          <ul>
-            <li>Uses abstraction library to make working with Env vars easier.</li>
-            <li>Available for many languages.</li>
-          </ul>
-        </aside>
       </section>
--->
+      <section>
+        <h3>Platform.sh / Kotlin</h3>
+        <pre><code class="java font--14" data-trim>
+package sh.platform.template.spring.kotlin
+
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import sh.platform.config.Config
+import sh.platform.config.MySQL
+import javax.sql.DataSource
+
+@Configuration
+class DataSourceConfig {
+
+    @Bean(name = ["dataSource"])
+    fun getDataSource(): DataSource {
+        val config = Config()
+        val database = config.getCredential("database") { MySQL(it) }
+        return database.get()
+    }
+}
+        </code></pre>
+      </section>
+      <!--
+            <section>
+              <h3>Platform.sh / Symfony 4</h3>
+              <pre class="font--18"><code class="bash" data-trim>
+      composer require platformsh/symfonyflex-bridge
+              </code></pre>
+              <pre class="fragment font--16"><code class="php" data-trim>
+      function mapPlatformShEnvironment() : void
+      {
+          $config = new Config();
+
+          $secret = getenv('APP_SECRET') ?: $config->projectEntropy;
+          setEnvVar('APP_SECRET', $secret);
+
+          $appEnv = getenv('APP_ENV') ?: 'prod';
+          setEnvVar('APP_ENV', $appEnv);
+
+          mapPlatformShDatabase('database', $config);
+
+          if (!getenv('MAILER_DSN')) {
+              mapPlatformShMailer($config);
+          }
+      }
+      // ...
+              </code></pre>
+              <aside class="notes">
+                <ul>
+                  <li>Uses abstraction library to make working with Env vars easier.</li>
+                  <li>Available for many languages.</li>
+                </ul>
+              </aside>
+            </section>
+      -->
 <!--
       <section>
         <h3>Platform.sh / Laravel</h3>
@@ -429,6 +481,7 @@ function mapPlatformShEnvironment() : void
           <ul>
             <li>Env defaults from config file</li>
             <li>Use only in dev, read actual env vars in prod</li>
+            <li>Never commit to repository!</li>
           </ul>
         </aside>
       </section>
@@ -446,14 +499,14 @@ function mapPlatformShEnvironment() : void
         </aside>
       </section>
       <section>
-        <h3><code id="constants">Constants?</code></h3>
+        <h3><code id="constants">Constants? Static config files?</code></h3>
         <span class="fragment" data-classer="constants" data-classer-class="struck"></span>
         <aside class="notes">
           <ul>
             <li>Globals</li>
             <li>Make overriding harder (for local dev)</li>
             <li>Make testing harder</li>
-            <li>Lookin' at you, WordPress</li>
+            <li>Static files cannot read env at runtime</li>
           </ul>
         </aside>
       </section>
