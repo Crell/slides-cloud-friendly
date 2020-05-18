@@ -301,7 +301,37 @@ if (getenv('PLATFORM_RELATIONSHIPS')) {
 $container->setParameter('kernel.secret', getenv('PLATFORM_PROJECT_ENTROPY'));
         </code></pre>
       </section>
-<!--
+      <section>
+        <h3>Platform.sh / Symfony 4</h3>
+        <pre class="font--18"><code class="bash" data-trim>
+          composer require platformsh/symfonyflex-bridge
+        </code></pre>
+        <pre class="fragment font--16"><code class="php" data-trim>
+            function mapPlatformShEnvironment() : void
+            {
+                $config = new Config();
+
+                $secret = getenv('APP_SECRET') ?: $config->projectEntropy;
+                setEnvVar('APP_SECRET', $secret);
+
+                $appEnv = getenv('APP_ENV') ?: 'prod';
+                setEnvVar('APP_ENV', $appEnv);
+
+                mapPlatformShDatabase('database', $config);
+
+                if (!getenv('MAILER_DSN')) {
+                    mapPlatformShMailer($config);
+                }
+            }
+            // ...
+              </code></pre>
+        <aside class="notes">
+          <ul>
+            <li>Uses abstraction library to make working with Env vars easier.</li>
+            <li>Available for many languages.</li>
+          </ul>
+        </aside>
+      </section>
       <section>
         <h3>Platform.sh / Express.js</h3>
         <pre><code class="javascript" data-trim>
@@ -324,7 +354,6 @@ var app = express();
 app.listen(config.port);
         </code></pre>
       </section>
--->
       <section>
         <h3>Platform.sh / Go</h3>
         <pre><code class="go font--14" data-trim>
@@ -372,6 +401,7 @@ public class DataSourceConfig {
 }
         </code></pre>
       </section>
+<!--
       <section>
         <h3>Platform.sh / Kotlin</h3>
         <pre><code class="java font--14" data-trim>
@@ -395,39 +425,7 @@ class DataSourceConfig {
 }
         </code></pre>
       </section>
-      <!--
-            <section>
-              <h3>Platform.sh / Symfony 4</h3>
-              <pre class="font--18"><code class="bash" data-trim>
-      composer require platformsh/symfonyflex-bridge
-              </code></pre>
-              <pre class="fragment font--16"><code class="php" data-trim>
-      function mapPlatformShEnvironment() : void
-      {
-          $config = new Config();
-
-          $secret = getenv('APP_SECRET') ?: $config->projectEntropy;
-          setEnvVar('APP_SECRET', $secret);
-
-          $appEnv = getenv('APP_ENV') ?: 'prod';
-          setEnvVar('APP_ENV', $appEnv);
-
-          mapPlatformShDatabase('database', $config);
-
-          if (!getenv('MAILER_DSN')) {
-              mapPlatformShMailer($config);
-          }
-      }
-      // ...
-              </code></pre>
-              <aside class="notes">
-                <ul>
-                  <li>Uses abstraction library to make working with Env vars easier.</li>
-                  <li>Available for many languages.</li>
-                </ul>
-              </aside>
-            </section>
-      -->
+-->
 <!--
       <section>
         <h3>Platform.sh / Laravel</h3>
@@ -661,15 +659,13 @@ function mapPlatformShEnvironment() : void
         </aside>
       </section>
       <section>
-        <div class="layout-stacked">
+        <div class="layout-stacked" style="height: 450px;">
           <h3>What is a microservice?</h3>
-          <p>
             <blockquote>
               There is no industry consensus yet regarding the properties of microservices, and an
               official definition is missing as well.
             </blockquote>
             <p>&mdash;<a href="https://en.wikipedia.org/wiki/Microservices">Wikipedia</a></p>
-          </p>
         </div>
         <aside class="notes">
           <ul>
@@ -679,13 +675,13 @@ function mapPlatformShEnvironment() : void
       </section>
       <section>
         <h3>Properties of microservice design</h3>
+        <p>(Sources: Wikipedia, <a href="https://martinfowler.com/articles/microservices.html">Martin Fowler</a>)</p>
         <ul>
           <li class="fragment">Single-purpose components</li>
           <li class="fragment">Dumb pipes (HTTP, IPC, etc.)</li>
           <li class="fragment">Separate teams</li>
           <li class="fragment">Independent releases</li>
         </ul>
-        <p class="fragment">(Sources: Wikipedia, <a href="https://martinfowler.com/articles/microservices.html">Martin Fowler</a>)</p>
       </section>
       <section>
         <p><q>Every microservice treats every other microservice as a separate 3rd party<br />
