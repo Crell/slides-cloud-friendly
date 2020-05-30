@@ -301,6 +301,7 @@ if (getenv('PLATFORM_RELATIONSHIPS')) {
 $container->setParameter('kernel.secret', getenv('PLATFORM_PROJECT_ENTROPY'));
         </code></pre>
       </section>
+<!--
       <section>
         <h3>Platform.sh / Symfony 4</h3>
         <pre class="font--18"><code class="bash" data-trim>
@@ -332,6 +333,8 @@ $container->setParameter('kernel.secret', getenv('PLATFORM_PROJECT_ENTROPY'));
           </ul>
         </aside>
       </section>
+-->
+<!--
       <section>
         <h3>Platform.sh / Express.js</h3>
         <pre><code class="javascript" data-trim>
@@ -354,6 +357,7 @@ var app = express();
 app.listen(config.port);
         </code></pre>
       </section>
+-->
       <section>
         <h3>Platform.sh / Go</h3>
         <pre><code class="go font--14" data-trim>
@@ -401,7 +405,6 @@ public class DataSourceConfig {
 }
         </code></pre>
       </section>
-<!--
       <section>
         <h3>Platform.sh / Kotlin</h3>
         <pre><code class="java font--14" data-trim>
@@ -425,7 +428,6 @@ class DataSourceConfig {
 }
         </code></pre>
       </section>
--->
 <!--
       <section>
         <h3>Platform.sh / Laravel</h3>
@@ -565,16 +567,6 @@ function mapPlatformShEnvironment() : void
         </aside>
       </section>
       <section>
-        <p class="oversize">Use Free Software</p>
-        <p class="fragment oversize">Use replaceable services</p>
-        <aside class="notes">
-          <ul>
-            <li>Go out of business, change pricing, change TOS</li>
-            <li>If app cannot run without AWS Lambda, you are 100% dependent on Amazon.</li>
-          </ul>
-        </aside>
-      </section>
-      <section>
         <h3>Google has killed...</h3>
         <ul style="column-count: 3">
           <li>Reader</li>
@@ -613,6 +605,16 @@ function mapPlatformShEnvironment() : void
           <ul>
             <li>Providers have their interests in mind</li>
             <li>You should have your interests in mind</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <p class="oversize">Use Free Software</p>
+        <p class="fragment oversize">Use replaceable services</p>
+        <aside class="notes">
+          <ul>
+            <li>Go out of business, change pricing, change TOS</li>
+            <li>If app cannot run without AWS Lambda, you are 100% dependent on Amazon.</li>
           </ul>
         </aside>
       </section>
@@ -741,8 +743,8 @@ function mapPlatformShEnvironment() : void
         <h3>Multi-Modal Monolith</h3>
         <p>&nbsp;</p>
         <p class="oversize fragment">Cron jobs</p>
-        <p class="oversize fragment">"Admin" application</p>
         <p class="oversize fragment">Queue workers</p>
+        <p class="oversize fragment">"Admin" application</p>
         <p class="oversize fragment">API app</p>
         <aside class="notes">
           <ul>
