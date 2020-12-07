@@ -34,7 +34,7 @@
   <div class="slides">
 
     <section>
-      <h1>Building a cloud-friendly application (in Java)</h1>
+      <h1>Building a cloud-friendly application</h1>
     </section>
     <section id="presenter">
       <h2>Larry Garfield</h2>
@@ -59,8 +59,8 @@
         </aside>
       </section>
       <section>
-        <img src="assets/cloud-eating-world.jpg" alt="Software is eating the world, and cloud is eating software." data-credit="https://twitter.com/bassamtabbara/status/921784412479545344" />
-        <small>(Source: <a href="https://twitter.com/bassamtabbara/status/921784412479545344">@bassamtabbara</a>)</small>
+        <img src="assets/cloud-eating-world.jpg" width="850px" alt="Software is eating the world, and cloud is eating software." data-credit="https://twitter.com/bassamtabbara/status/921784412479545344" />
+        <p><small>(Source: <a href="https://twitter.com/bassamtabbara/status/921784412479545344">@bassamtabbara</a>)</small></p>
         <aside class="notes">
           <ul>
             <li>Cloud-based hosting is the big thing</li>
@@ -232,6 +232,7 @@
       </section>
       <section>
         <h2>Environment variables</h2>
+        <!--
         <pre class="font--24"><code class="php" data-trim>
           // PHP
           getenv('foo');
@@ -249,7 +250,7 @@
           System.getEnv("foo");
         </code></pre>
         <p>Etc.</p>
-        <!--
+        -->
         <pre class="font--24"><code class="php" data-trim>
 getenv('foo');
 
@@ -258,13 +259,12 @@ $_ENV['foo'];
 $_ENV['foo']['bar'];
         </code></pre>
         <p class="topspace fragment">Only ever use <code>getenv()</code></p>
--->
         <aside class="notes">
           <ul>
             <li>All env injected this way</li>
             <li>Don't always control them exactly</li>
             <li>Host may have own format, app has own format</li>
-<!--            <li>$_ENV breaks on php internal webserver</li>-->
+            <li>$_ENV breaks on php internal webserver</li>
           </ul>
         </aside>
       </section>
@@ -299,9 +299,8 @@ if (getenv('PLATFORM_RELATIONSHIPS')) {
 $container->setParameter('kernel.secret', getenv('PLATFORM_PROJECT_ENTROPY'));
         </code></pre>
       </section>
-<!--
       <section>
-        <h3>Platform.sh / Symfony 4</h3>
+        <h3>Platform.sh / Symfony 5</h3>
         <pre class="font--18"><code class="bash" data-trim>
           composer require platformsh/symfonyflex-bridge
         </code></pre>
@@ -331,102 +330,6 @@ $container->setParameter('kernel.secret', getenv('PLATFORM_PROJECT_ENTROPY'));
           </ul>
         </aside>
       </section>
--->
-<!--
-      <section>
-        <h3>Platform.sh / Express.js</h3>
-        <pre><code class="javascript" data-trim>
-const platformsh = require('platformsh-config');
-let config = platformsh.config();
-
-const credentials = config.credentials('database');
-
-const connection = await mysql.createConnection({
-    host: credentials.host,
-    port: credentials.port,
-    user: credentials.username,
-    password: credentials.password,
-    database: credentials.path,
-});
-
-var app = express();
-// ...
-
-app.listen(config.port);
-        </code></pre>
-      </section>
--->
-      <section>
-        <h3>Platform.sh / Go</h3>
-        <pre><code class="go font--14" data-trim>
-package conf
-import (
-  psh "github.com/platformsh/config-reader-go/v2"
-)
-var PshConfig = createPshConfigObj()
-
-func createPshConfigObj() *psh.RuntimeConfig {
-  config, _ := psh.NewRuntimeConfig()
-  return config
-}
-        </code></pre>
-        <pre><code class="go font--14" data-trim>
-package main
-
-func main() {
-  engine := gin.Default()
-  // ...
-  err := ginInstance.Run(":" + conf.PshConfig.Port())
-}
-        </code></pre>
-      </section>
-      <section>
-        <h3>Platform.sh / Java Spring</h3>
-        <pre><code class="java font--14" data-trim>
-package sh.platform.template;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import sh.platform.config.Config;
-import sh.platform.config.MySQL;
-
-import javax.sql.DataSource;
-
-@Configuration
-public class DataSourceConfig {
-    @Bean(name = "dataSource")
-    public DataSource getDataSource() {
-        Config config = new Config();
-        MySQL database = config.getCredential("database", MySQL::new);
-        return database.get();
-    }
-}
-        </code></pre>
-      </section>
-      <section>
-        <h3>Platform.sh / Kotlin</h3>
-        <pre><code class="java font--14" data-trim>
-package sh.platform.template.spring.kotlin
-
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
-import sh.platform.config.Config
-import sh.platform.config.MySQL
-import javax.sql.DataSource
-
-@Configuration
-class DataSourceConfig {
-
-    @Bean(name = ["dataSource"])
-    fun getDataSource(): DataSource {
-        val config = Config()
-        val database = config.getCredential("database") { MySQL(it) }
-        return database.get()
-    }
-}
-        </code></pre>
-      </section>
-<!--
       <section>
         <h3>Platform.sh / Laravel</h3>
         <pre class="font--18"><code class="bash" data-trim>
@@ -457,8 +360,104 @@ function mapPlatformShEnvironment() : void
           </ul>
         </aside>
       </section>
--->
-<!--
+      <section>
+        <h3>Platform.sh / Express.js</h3>
+        <pre><code class="javascript" data-trim>
+const platformsh = require('platformsh-config');
+let config = platformsh.config();
+
+const credentials = config.credentials('database');
+
+const connection = await mysql.createConnection({
+    host: credentials.host,
+    port: credentials.port,
+    user: credentials.username,
+    password: credentials.password,
+    database: credentials.path,
+});
+
+var app = express();
+// ...
+
+app.listen(config.port);
+        </code></pre>
+      </section>
+      <!--
+      <section>
+        <h3>Platform.sh / Go</h3>
+        <pre><code class="go font--14" data-trim>
+package conf
+import (
+  psh "github.com/platformsh/config-reader-go/v2"
+)
+var PshConfig = createPshConfigObj()
+
+func createPshConfigObj() *psh.RuntimeConfig {
+  config, _ := psh.NewRuntimeConfig()
+  return config
+}
+        </code></pre>
+        <pre><code class="go font--14" data-trim>
+package main
+
+func main() {
+  engine := gin.Default()
+  // ...
+  err := ginInstance.Run(":" + conf.PshConfig.Port())
+}
+        </code></pre>
+      </section>
+      -->
+      <!--
+      <section>
+        <h3>Platform.sh / Java Spring</h3>
+        <pre><code class="java font--14" data-trim>
+package sh.platform.template;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import sh.platform.config.Config;
+import sh.platform.config.MySQL;
+
+import javax.sql.DataSource;
+
+@Configuration
+public class DataSourceConfig {
+    @Bean(name = "dataSource")
+    public DataSource getDataSource() {
+        Config config = new Config();
+        MySQL database = config.getCredential("database", MySQL::new);
+        return database.get();
+    }
+}
+        </code></pre>
+      </section>
+      -->
+      <!--
+      <section>
+        <h3>Platform.sh / Kotlin</h3>
+        <pre><code class="java font--14" data-trim>
+package sh.platform.template.spring.kotlin
+
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import sh.platform.config.Config
+import sh.platform.config.MySQL
+import javax.sql.DataSource
+
+@Configuration
+class DataSourceConfig {
+
+    @Bean(name = ["dataSource"])
+    fun getDataSource(): DataSource {
+        val config = Config()
+        val database = config.getCredential("database") { MySQL(it) }
+        return database.get()
+    }
+}
+        </code></pre>
+      </section>
+      -->
       <section>
         <h3>Glue of last resort</h3>
         <p><code>composer.json</code></p>
@@ -471,7 +470,6 @@ function mapPlatformShEnvironment() : void
         </code></pre>
         <p class="topspace fragment">Only works if your app reads env vars...</p>
       </section>
--->
       <section>
         <p class="oversize">Use DotEnv (<code>.env</code> files)</p>
         <p class="fragment">(Many to pick from in every language)</p>
@@ -487,8 +485,8 @@ function mapPlatformShEnvironment() : void
       <section>
         <h3>Trusted domains</h3>
         <p>(App-specific configuration)</p>
-<!--        <h3>Symfony\HttpFoundation</h3>-->
-<!--        <p><code>Request::setTrustedHosts()</code></p>-->
+        <h3>Symfony\HttpFoundation</h3>
+        <p><code>Request::setTrustedHosts()</code></p>
         <aside class="notes">
           <ul>
             <li>Trusted host will vary depending on dev/stage/prod</li>
@@ -649,7 +647,6 @@ function mapPlatformShEnvironment() : void
         </aside>
       </section>
     </section>
-    <!--
     <section>
       <section>
         <h3>Microservices: Threat or menace</h3>
@@ -766,7 +763,6 @@ function mapPlatformShEnvironment() : void
         </aside>
       </section>
     </section>
-    -->
     <section>
       <section>
         <h2>To summarize...</h2>
@@ -780,7 +776,7 @@ function mapPlatformShEnvironment() : void
             <li>Domain</li>
             <li>writeability</li>
             <li>3rd party services will exist forever</li>
-<!--            <li>That you are big enough to need microservices</li>-->
+            <li>That you are big enough to need microservices</li>
           </ul>
         </aside>
       </section>
