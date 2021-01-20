@@ -53,7 +53,11 @@ body.skin-blue {
 }
 
 body {
-  background-color: var(--background);
+  /*
+  No, important is not OK. But I don't know how else to override
+  Reveal 4's default background of white.
+   */
+  background-color: var(--background) !important;
   font-family: var(--brand-font), Helvetica, sans-serif;
   color: var(--color-text);
 }
@@ -140,12 +144,25 @@ body {
 .reveal ul {
   display: inline-block;
   text-align: left;
+  margin-left: 2em;
+  margin-right: 2em;
 }
 .reveal ol ol,
 .reveal dl dl,
 .reveal ul ul {
   margin-left: 2em;
 }
+
+dt {
+  font-weight: bold;
+  line-height: 1.5em;
+}
+
+dd {
+  margin-left: 2em;
+  line-height: 1.5em;
+}
+
 
 ul.inline {
   display: flex;
@@ -172,7 +189,7 @@ ul.inline li {
   font-size: 1.5rem;
 }
 
-p.bigdeal {
+p.bigdeal, li.bigdeal {
   /* This is used in certain animations. */
   font-size: 200%;
   color: Red;
@@ -188,8 +205,8 @@ p.bigdeal {
 
 .reveal p.fullscreen-credit {
   /* Used to show credit URL for a background image. */
-  /*position: absolute;*/
-  /*margin-top: 90%;*/
+  position: absolute;
+  margin-top: 90%;
   font-size: small;
   width: available;
   background-color: var(--color-highlight);
@@ -228,8 +245,10 @@ p.credit {
 .reveal pre {
   display: block;
   position: relative;
-  width: 100%;
-  margin: 0.25rem auto;
+  width: 90%;
+  /* For some reason it doesn't center without re-specifying the margins. */
+  margin-left: auto;
+  margin-right: auto;
   text-align: left;
   font-size: 1rem;
   font-family: var(--brand-font-mono), monospace;
@@ -237,6 +256,10 @@ p.credit {
   word-wrap: break-word;
 }
 
+.reveal em {
+  color: var(--color-emphasis);
+  font-style: italic;
+}
 
 aside {
   /* Used mainly for captioned things */
@@ -298,11 +321,6 @@ aside {
   padding: 0.5em;
   overflow: auto;
   font-size: 0.7rem;
-  max-width: 90%;
-  /* For some reason it doesn't center without re-specifying the margins. */
-  margin-left: auto;
-  margin-right: auto;
-  /* This is based on a default slide height in Reveal of 700px. */
   max-height: 550px;
 }
 
@@ -316,19 +334,36 @@ aside {
 
 /* Layouts. These must all apply to div, not section elements. */
 
-div.layout-col {
+.reveal .layout-col {
   /* By default this will be top-aligned. */
   display: flex;
   justify-content: space-around;
   flex-wrap: nowrap;
+  /* Makes this rule work nicely on ULs. */
+  list-style: none;
+  text-align: center;
 }
 
-div.layout-col.equal-width > * {
+.reveal .layout-col.equal-width > * {
   flex: 1;
 }
 
-div.layout-col.vcentered {
+.reveal .layout-col.vcentered {
   align-items: center;
+}
+
+.reveal .layout-col.fixed-height > *,
+.reveal .layout-col.fixed-height  img {
+  /* This is a default, intended to be overwritten by a style attribute. */
+  /* Set the style attribute on the .fixed-height element; it will apply to the children. */
+  --height: 200px;
+  height: var(--height);
+}
+
+/* code blocks in columns need an extra margin so that they don't butt up against the next cells. */
+.layout-col pre {
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .reveal .layout-stacked {
@@ -422,6 +457,7 @@ div.layout-2up-1down {
 img {
   /* Make sure no images go larger than the screen, if nothing else. */
   max-width: 100%;
+  max-height: 100%;
 }
 
 img.screenshot {
@@ -432,7 +468,8 @@ img.screenshot {
 }
 
 img.meme {
-  width: 90%;
+  width: 600px;
+  height: auto;
   /* These values based on the default Reveal.js slide size of 960x700. */
   max-width: 960px;
   max-height: 650px;
