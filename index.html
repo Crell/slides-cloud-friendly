@@ -66,7 +66,6 @@
           <p class="oversize">What is cloud<br />computing?</p>
           <p class="fragment oversize">What is<br />The Cloud?</p>
         </div>
-
         <p class="fragment">These are separate questions...</p>
       </section>
       <section>
@@ -221,7 +220,7 @@
           </ul>
         </aside>
       </section>
-      <section> <!-- Multilingual version -->
+      <section data-visibility="hidden"> <!-- Multilingual version -->
         <h2>Environment variables</h2>
         <pre class="font--24"><code class="php" data-trim>
           // PHP
@@ -248,7 +247,7 @@
           </ul>
         </aside>
       </section>
-      <section data-visibility="hidden"> <!-- PHP version -->
+      <section> <!-- PHP version -->
         <h2>Environment variables</h2>
         <pre class="font--24"><code class="php" data-trim>
 getenv('foo');
@@ -276,7 +275,7 @@ $_ENV['foo']['bar'];
           </ul>
         </aside>
       </section>
-      <section data-visibility="hidden"> <!-- PHP only -->
+      <section> <!-- PHP only -->
         <h3>Platform.sh / Symfony 3</h3>
         <pre><code class="php font--14" data-trim>
 // platform_parameters.php
@@ -298,7 +297,7 @@ if (getenv('PLATFORM_RELATIONSHIPS')) {
 $container->setParameter('kernel.secret', getenv('PLATFORM_PROJECT_ENTROPY'));
         </code></pre>
       </section>
-      <section data-visibility="hidden"> <!-- PHP only -->
+      <section> <!-- PHP only -->
         <h3>Platform.sh / Symfony 5</h3>
         <pre class="font--18"><code class="bash" data-trim>
           composer require platformsh/symfonyflex-bridge
@@ -329,7 +328,7 @@ $container->setParameter('kernel.secret', getenv('PLATFORM_PROJECT_ENTROPY'));
           </ul>
         </aside>
       </section>
-      <section data-visibility="hidden"> <!-- PHP only -->
+      <section> <!-- PHP only -->
         <h3>Platform.sh / Laravel</h3>
         <pre class="font--18"><code class="bash" data-trim>
 composer require platformsh/laravel-bridge
@@ -359,7 +358,7 @@ function mapPlatformShEnvironment() : void
           </ul>
         </aside>
       </section>
-      <section>
+      <section data-visibility="hidden">
         <h3>Platform.sh / Java Spring</h3>
         <pre><code class="java font--14" data-trim>
 package sh.platform.template;
@@ -382,7 +381,7 @@ public class DataSourceConfig {
 }
         </code></pre>
       </section>
-      <section>
+      <section data-visibility="hidden">
         <h3>Platform.sh / Kotlin</h3>
         <pre><code class="java font--14" data-trim>
 package sh.platform.template.spring.kotlin
@@ -451,7 +450,7 @@ func main() {
 }
         </code></pre>
       </section>
-      <section data-visibility="hidden"> <!-- PHP only -->
+      <section> <!-- PHP only -->
         <h3>Glue of last resort</h3>
         <p><code>composer.json</code></p>
         <pre class="font--18"><code class="json" data-trim>
