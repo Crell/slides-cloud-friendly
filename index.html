@@ -15,6 +15,19 @@
   <!-- Theme used for syntax highlighted code -->
   <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
 
+  <style type="text/css">
+
+    div.layout-1up-2down {
+      display: grid;
+      grid-template-rows: 1fr 3fr;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+    "top top"
+    "left right";
+      justify-items: center;
+    }
+
+  </style>
 </head>
 <body class="skin-blue">
 <div class="reveal">
@@ -775,22 +788,24 @@ func main() {
     </section>
 
     <section id="final">
-      <div class="layout-col">
-        <div>
+      <div class="layout-1up-2down">
+        <div style="grid-area: top; margin-top: 1em;">
           <h2>Larry Garfield</h2>
           <h2><a href="http://twitter.com/Crell">@Crell</a></h2>
           <p>Director of Developer Experience <a href="http://www.platform.sh/">Platform.sh</a></p>
-          <p>The end-to-end web platform for agile teams</p>
           <p>Stalk us at <a href="http://twitter.com/Platformsh">@PlatformSH</a></p>
         </div>
-        <div>
+        <div style="grid-area: left">
+          <h2>All about PHP 8!</h2>
+          <p><a href="https://platform.sh/php8-ebook/">https://platform.sh/php8-ebook/</a></p>
+          <p><a href="https://platform.sh/php8-ebook/"><img src="assets/exploring-php80.png" width="175px;" alt="Cover of Thinking Functionally in PHP" /></a></p>        </div>
+        <div style="grid-area: right">
           <h2>Buy my book!</h2>
           <p><a href="https://bit.ly/fn-php">https://bit.ly/fn-php</a></p>
           <p><a href="https://bit.ly/fn-php"><img src="assets/thinking-functionally.png" width="175px;" alt="Cover of Thinking Functionally in PHP" /></a></p>
         </div>
       </div>
     </section>
-
   </div>
 
 </div>
