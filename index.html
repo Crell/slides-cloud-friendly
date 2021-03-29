@@ -237,7 +237,7 @@
           </ul>
         </aside>
       </section>
-      <section data-visibility="hidden"> <!-- Multilingual version -->
+      <section> <!-- Multilingual version -->
         <h2>Environment variables</h2>
         <pre class="font--24"><code class="php" data-trim>
           // PHP
@@ -264,7 +264,7 @@
           </ul>
         </aside>
       </section>
-      <section> <!-- PHP version -->
+      <section data-visibility="hidden"> <!-- PHP version -->
         <h2>Environment variables</h2>
         <pre class="font--24"><code class="php" data-trim>
 getenv('foo');
@@ -292,7 +292,7 @@ $_ENV['foo']['bar'];
           </ul>
         </aside>
       </section>
-      <section> <!-- PHP only -->
+      <section data-visibility="hidden"> <!-- PHP only -->
         <h3>Platform.sh / Symfony 3</h3>
         <pre><code class="php font--14" data-trim>
 // platform_parameters.php
@@ -314,7 +314,7 @@ if (getenv('PLATFORM_RELATIONSHIPS')) {
 $container->setParameter('kernel.secret', getenv('PLATFORM_PROJECT_ENTROPY'));
         </code></pre>
       </section>
-      <section> <!-- PHP only -->
+      <section data-visibility="hidden"> <!-- PHP only -->
         <h3>Platform.sh / Symfony 5</h3>
         <pre class="font--18"><code class="bash" data-trim>
           composer require platformsh/symfonyflex-bridge
@@ -345,7 +345,7 @@ $container->setParameter('kernel.secret', getenv('PLATFORM_PROJECT_ENTROPY'));
           </ul>
         </aside>
       </section>
-      <section> <!-- PHP only -->
+      <section data-visibility="hidden"> <!-- PHP only -->
         <h3>Platform.sh / Laravel</h3>
         <pre class="font--18"><code class="bash" data-trim>
 composer require platformsh/laravel-bridge
@@ -375,7 +375,7 @@ function mapPlatformShEnvironment() : void
           </ul>
         </aside>
       </section>
-      <section data-visibility="hidden">
+      <section>
         <h3>Platform.sh / Java Spring</h3>
         <pre><code class="java font--14" data-trim>
 package sh.platform.template;
@@ -398,7 +398,7 @@ public class DataSourceConfig {
 }
         </code></pre>
       </section>
-      <section data-visibility="hidden">
+      <section>
         <h3>Platform.sh / Kotlin</h3>
         <pre><code class="java font--14" data-trim>
 package sh.platform.template.spring.kotlin
@@ -605,7 +605,8 @@ func main() {
           <li>Writely</li>
           <li>Plus+</li>
         </ul>
-        <p><small>Source: <a href="http://www.wordstream.com/blog/ws/2013/06/27/discontinued-google-products-services">WordStream</a> (2015)</small></p>
+        <p class="oversize">227 services total!</p>
+        <p><small>Source: <a href="https://killedbygoogle.com/">Google Graveyard</a> (2021)</small></p>
         <aside class="notes">
           <ul>
             <li>Providers have their interests in mind</li>
